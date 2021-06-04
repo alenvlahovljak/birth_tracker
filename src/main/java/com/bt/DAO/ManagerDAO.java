@@ -108,14 +108,14 @@ public class ManagerDAO {
         try {
             connection = jdbcConfig.establishDBConnection();
 
-            String SQL = "update manager " + "username=?, first_name=?, last_name=?, avatar_url=? " + "where id=?";
+            String SQL = "update manager " + "set username=?, first_name=?, last_name=?, avatar_url=? " + "where id=?";
             statement = connection.prepareStatement(SQL);
 
             statement.setString(1, manager.getUsername());
             statement.setString(2, manager.getFirstName());
             statement.setString(3, manager.getLastName());
             statement.setString(4, manager.getAvatar());
-            statement.setInt(6, manager.getId());
+            statement.setInt(5, manager.getId());
 
             statement.execute();
         } finally {

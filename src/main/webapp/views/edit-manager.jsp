@@ -29,7 +29,7 @@
             crossorigin="anonymous">
     </script>
 
-    <title>List of all managers | Birth_TrackeR</title>
+    <title><c:out value="${requestScope.organization.name}"/> | Edit</title>
 
     <style>
         .bd-placeholder-img {
@@ -62,22 +62,11 @@
                         Then, link them off to some social networking sites or contact information.</p>
                 </div>
                 <div class="col-sm-4 offset-md-1 py-4">
-                    <h4 class="text-white mb-4">My company name | User</h4>
-                    <button type="button" class="btn btn-outline-secondary">Profile</button>
-                    <button type="button" class="btn btn-outline-secondary">Company</button>
-                    <c:url var="addParty" value="PartyServlet">
-                        <c:param name="command" value="ADD"/>
-                    </c:url>
-                    <c:url var="addOrganization" value="OrganizationServlet">
-                        <c:param name="command" value="ADD"/>
-                    </c:url>
-                    <c:url var="addManager" value="ManagerServlet">
-                        <c:param name="command" value="ADD"/>
-                    </c:url>
+                    <h4 class="text-white">Contact</h4>
                     <ul class="list-unstyled">
-                        <li><a href="${addParty}" class="text-white">Add Party</a></li>
-                        <li><a href="${addOrganization}" class="text-white">Add Organization</a></li>
-                        <li><a href="${addManager}" class="text-white">Add Manager</a></li>
+                        <li><a href="#" class="text-white">Follow on Twitter</a></li>
+                        <li><a href="#" class="text-white">Like on Facebook</a></li>
+                        <li><a href="#" class="text-white">Email me</a></li>
                     </ul>
                 </div>
             </div>
@@ -95,54 +84,72 @@
         </div>
     </div>
 </header>
-
-<section class="py-5 text-center container">
-    <div class="row py-lg-5">
-        <div class="col-lg-6 col-md-8 mx-auto">
-            <h1 class="fw-light">List of all managers</h1>
-            </p>
+<main class="container">
+    <section class="py-5 text-center container">
+        <div class="row py-lg-5">
+            <div class="col-lg-6 col-md-8 mx-auto">
+                <h1 class="fw-light"><c:out value="${requestScope.manager.username}"/></h1>
+                <p class="lead text-muted">Not happy with a manager content?</p>
+                <p>
+                    <a href="${pageContext.request.contextPath}/" class="btn btn-primary my-2">Get back to parties!</a>
+                </p>
+            </div>
         </div>
-    </div>
-</section>
-
-<main>
-    <div class="album py-5 bg-light">
-        <div class="container">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Username</th>
-                    <th scope="col">First name</th>
-                    <th scope="col">Last name</th>
-                    <th>Actions</th>
-                </tr>
-                </thead>
-                <tbody>
-                <c:forEach var="manager" items="${requestScope.managers}">
-                    <c:url var="editManager" value="ManagerServlet">
-                        <c:param name="command" value="EDIT"/>
-                        <c:param name="id" value="${manager.id}"/>
-                    </c:url>
-                    <c:url var="deleteManager" value="ManagerServlet">
-                        <c:param name="command" value="DELETE"/>
-                        <c:param name="id" value="${manager.id}"/>
-                    </c:url>
-                    <tr>
-                        <th scope="row">${manager.id}</th>
-                        <td>${manager.username}</td>
-                        <td>${manager.firstName}</td>
-                        <td>${manager.lastName}</td>
-                        <td>
-                            <a href="${editManager}" class="btn btn-outline-warning">Edit</a>
-                            <a href="${deleteManager}" class="btn btn-outline-danger">Delete</a>
-                        </td>
-                    </tr>
-                </c:forEach>
-                </tbody>
-            </table>
+    </section>
+    <form class="row" action="ManagerServlet?command=UPDATE" method="post">
+        <div class="col-3"></div>
+        <div class="col-6">
+            <input type="hidden" name="id" value="${requestScope.manager.id}"/>
+            <div class="form-group mb-3">
+                <label for="username">Username <small class="form-text text-muted">(required)</small></label>
+                <input type="text"
+                       required
+                       class="form-control mt-2"
+                       id="username"
+                       name="username"
+                       value="${requestScope.manager.username}"
+                       placeholder="JonnY"
+                >
+            </div>
+            <div class="form-group mb-3">
+                <label for="first_name">First name <small class="form-text text-muted">(required)</small></label>
+                <input type="text"
+                       required
+                       class="form-control mt-2"
+                       id="first_name"
+                       name="first_name"
+                       value="${requestScope.manager.firstName}"
+                       placeholder="John"
+                >
+            </div>
+            <div class="form-group mb-3">
+                <label for="last_name">Last name <small class="form-text text-muted">(required)</small></label>
+                <input type="text"
+                       required
+                       class="form-control mt-2"
+                       id="last_name"
+                       name="last_name"
+                       value="${requestScope.manager.lastName}"
+                       placeholder="Smith"
+                >
+            </div>
+            <div class="form-group mb-3">
+                <label for="thumbnail">Avatar URL</label>
+                <input type="text"
+                       class="form-control mt-2"
+                       id="thumbnail"
+                       name="avatar_url"
+                       value="${requestScope.manager.avatar}"
+                       placeholder="https://www.example.com"
+                >
+            </div>
         </div>
-    </div>
+        <div class="col-3"></div>
+        <div class="col-3"></div>
+        <div class="col-9">
+            <button type="submit" class="btn btn-primary mt-3">Save</button>
+        </div>
+    </form>
 
 </main>
 
@@ -151,9 +158,7 @@
         <p class="float-end mb-1">
             <a href="#">Back to top</a>
         </p>
-        <p class="mb-1">Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
-        <p class="mb-0">New to Bootstrap? <a href="/">Visit the homepage</a> or read our <a
-                href="../getting-started/introduction/">getting started guide</a>.</p>
+        <p class="mb-1">Birth_TrackeR &copy; 2021</p>
     </div>
 </footer>
 </body>

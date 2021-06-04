@@ -28,6 +28,14 @@ public class Manager {
         this.avatar = avatar;
     }
 
+    public Manager(int id, String username, String firstName, String lastName, String avatar) {
+        this.id = id;
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.avatar = avatar;
+    }
+
     public int getId() {
         return id;
     }

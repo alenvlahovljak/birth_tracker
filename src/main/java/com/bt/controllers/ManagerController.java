@@ -59,13 +59,12 @@ public class ManagerController {
 
     public void updateManagerController(HttpServletRequest request, HttpServletResponse response) throws Exception {
         int id = Integer.parseInt(request.getParameter("id"));
-        String name = request.getParameter("name");
         String username = request.getParameter("username");
         String firstName = request.getParameter("first_name");
         String lastName = request.getParameter("last_name");
         String avatar = request.getParameter("avatar_url");
 
-        Manager manager = new Manager(id, name, username, firstName, lastName, avatar);
+        Manager manager = new Manager(id, username, firstName, lastName, avatar);
         managerDAO.updateManager(manager);
 
         response.sendRedirect(request.getContextPath() + "/ManagerServlet?command=LIST");
