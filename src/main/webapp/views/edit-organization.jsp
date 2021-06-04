@@ -29,7 +29,7 @@
             crossorigin="anonymous">
     </script>
 
-    <title><c:out value="${requestScope.party.name}"/> | Edit</title>
+    <title><c:out value="${requestScope.organization.name}"/> | Edit</title>
 
     <style>
         .bd-placeholder-img {
@@ -88,39 +88,40 @@
     <section class="py-5 text-center container">
         <div class="row py-lg-5">
             <div class="col-lg-6 col-md-8 mx-auto">
-                <h1 class="fw-light"><c:out value="${requestScope.party.name}"/></h1>
-                <p class="lead text-muted">Not happy with a party content?</p>
+                <h1 class="fw-light"><c:out value="${requestScope.organization.name}"/></h1>
+                <p class="lead text-muted">Not happy with a organization content?</p>
                 <p>
                     <a href="${pageContext.request.contextPath}/" class="btn btn-primary my-2">Get back to parties!</a>
                 </p>
             </div>
         </div>
     </section>
-    <form class="row" action="PartyServlet?command=UPDATE" method="post">
+    <form class="row" action="OrganizationServlet?command=UPDATE" method="post">
         <div class="col-3"></div>
         <div class="col-6">
-            <input type="hidden" name="id" value="${requestScope.party.id}"/>
+            <input type="hidden" name="id" value="${requestScope.organization.id}"/>
             <div class="form-group mb-3">
-                <label for="name">Party name <small class="form-text text-muted">(required)</small></label>
+                <label for="name">Organization name <small class="form-text text-muted">(required)</small></label>
                 <input type="text"
                        required
                        class="form-control mt-2"
                        id="name"
                        name="name"
-                       value="${requestScope.party.name}"
-                       placeholder="Mary's magical night"
+                       value="${requestScope.organization.name}"
+                       placeholder="Awsome organization"
                 >
             </div>
             <div class="form-group mb-3">
-                <label for="organization">Organization <small class="form-text text-muted">(required)</small></label>
-                <select id="organization" name="organization_id" class="form-select mt-2">
-                    <c:forEach var="organization" items="${requestScope.organizations}">
-                        <option ${organization.id == requestScope.party.organizationId ? 'selected="selected"' : ''}
-                                value="${organization.id}">${organization.name} (abbr. ${organization.abbreviation})
-                        </option>
-                    </c:forEach>
-                </select>
-
+                <label for="abbreviation">Abbreviation <small class="form-text text-muted">(required)</small></label>
+                <input type="text"
+                       required
+                       maxlength="10"
+                       class="form-control mt-2"
+                       id="abbreviation"
+                       name="abbreviation"
+                       value="${requestScope.organization.abbreviation}"
+                       placeholder="AWsome"
+                >
             </div>
             <div class="form-group mb-3">
                 <label for="description">Description</label>
@@ -129,8 +130,8 @@
                           rows="5"
                           id="description"
                           name="description"
-                          placeholder="Explain your top notch party..."
-                >${requestScope.party.description}</textarea>
+                          placeholder="Tell something about your organization..."
+                >${requestScope.organization.description}</textarea>
             </div>
             <div class="form-group mb-3">
                 <label for="thumbnail">Thumbnail URL</label>
@@ -138,22 +139,9 @@
                        class="form-control mt-2"
                        id="thumbnail"
                        name="thumbnail_url"
-                       value="${requestScope.party.thumbnail}"
+                       value="${requestScope.organization.thumbnail}"
                        placeholder="https://www.example.com"
                 >
-            </div>
-            <div class="form-group mb-3">
-                <label for="maxParticipants">Maximum number of participants</label>
-                <input type="range"
-                       class="form-range mt-2"
-                       id="maxParticipants"
-                       name="max_participants"
-                       min="10"
-                       value="${requestScope.party.maxParticipants}"
-                       max="100"
-                       onInput="document.getElementById('range').innerText = document.getElementById('maxParticipants').value"
-                >
-                <span id="range">${requestScope.party.maxParticipants}</span>
             </div>
         </div>
         <div class="col-3"></div>

@@ -29,6 +29,9 @@ public class OrganizationServlet extends HttpServlet {
                 case "LOAD":
                     organizationController.getOrganizationController(request, response);
                     break;
+                case "EDIT":
+                    organizationController.editOrganizationController(request,response);
+                    break;
                 case "DELETE":
                     organizationController.deleteOrganizationController(request, response);
                 default:
