@@ -57,7 +57,14 @@ public class Party {
     }
 
     public Party(int id, String name, String description, String thumbnail, int participants, int maxParticipants, boolean hasFreeSpots, int organizationId, String organizationAbbreviation) {
-        this(id, name, description, thumbnail, participants, maxParticipants, hasFreeSpots, organizationId);
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.thumbnail = thumbnail;
+        this.participants = participants;
+        this.maxParticipants = maxParticipants;
+        this.hasFreeSpots = hasFreeSpots;
+        this.organizationId = organizationId;
         this.organizationAbbreviation = organizationAbbreviation;
     }
 
