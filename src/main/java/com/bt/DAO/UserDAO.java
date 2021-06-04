@@ -1,16 +1,16 @@
 package com.bt.DAO;
 
-import com.bt.bean.Manager;
+import com.bt.bean.User;
 import com.bt.db.JDBCConfig;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ManagerDAO {
+public class UserDAO {
     JDBCConfig jdbcConfig = new JDBCConfig();
 
-    public Manager retrieveDBModel(ResultSet resultSet) throws SQLException {
+    public User retrieveDBModel(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("id");
         String role = resultSet.getString("role");
         String username = resultSet.getString("username");
@@ -18,81 +18,81 @@ public class ManagerDAO {
         String lastName = resultSet.getString("last_name");
         String avatar = resultSet.getString("avatar_url");
 
-        return new Manager(id, role, username, firstName, lastName, avatar);
+        return new User(id, role, username, firstName, lastName, avatar);
     }
 
-    public List<Manager> getManagers() throws Exception {
+    public List<User> getUsers() throws Exception {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
 
-        List<Manager> managers = new ArrayList<>();
+        List<User> users = new ArrayList<>();
 
         try {
             connection = jdbcConfig.establishDBConnection();
 
-            String SQL = "select * from manager";
+            String SQL = "select * from users";
             statement = connection.createStatement();
 
             resultSet = statement.executeQuery(SQL);
 
             while (resultSet.next()) {
-                Manager manager = retrieveDBModel(resultSet);
-                managers.add(manager);
+                User user = retrieveDBModel(resultSet);
+                users.add(user);
             }
 
-            return managers;
+            return users;
         } finally {
             jdbcConfig.closeDBConnection(connection, statement, resultSet);
         }
     }
 
 
-    public Manager getManager(String managerId) throws Exception {
+    public User getUser(String userId) throws Exception {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
-        Manager manager;
+        User user;
         int id;
 
         try {
-            id = Integer.parseInt(managerId);
+            id = Integer.parseInt(userId);
 
             connection = jdbcConfig.establishDBConnection();
 
-            String SQL = "select * from manager where id=?";
+            String SQL = "select * from user where id=?";
             statement = connection.prepareStatement(SQL);
             statement.setInt(1, id);
 
             resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                manager = retrieveDBModel(resultSet);
+                user = retrieveDBModel(resultSet);
             } else {
-                throw new Exception("Could not find manager with id: " + id);
+                throw new Exception("Could not find user with id: " + id);
             }
 
-            return manager;
+            return user;
         } finally {
             jdbcConfig.closeDBConnection(connection, statement, resultSet);
         }
     }
 
-    public void createManager(Manager manager) throws Exception {
+    public void createUser(User user) throws Exception {
         Connection connection = null;
         PreparedStatement statement = null;
 
         try {
             connection = jdbcConfig.establishDBConnection();
 
-            String SQL = "insert into manager " + "(username, first_name, last_name, avatar_url) " + "value (?, ?, ?, ?)";
+            String SQL = "insert into user " + "(username, first_name, last_name, avatar_url) " + "value (?, ?, ?, ?)";
             statement = connection.prepareStatement(SQL);
 
-            statement.setString(1, manager.getUsername());
-            statement.setString(2, manager.getFirstName());
-            statement.setString(3, manager.getLastName());
-            statement.setString(4, manager.getAvatar());
+            statement.setString(1, user.getUsername());
+            statement.setString(2, user.getFirstName());
+            statement.setString(3, user.getLastName());
+            statement.setString(4, user.getAvatar());
 
             statement.executeUpdate();
         } finally {
@@ -100,21 +100,21 @@ public class ManagerDAO {
         }
     }
 
-    public void updateManager(Manager manager) throws Exception {
+    public void updateUser(User user) throws Exception {
         Connection connection = null;
         PreparedStatement statement = null;
 
         try {
             connection = jdbcConfig.establishDBConnection();
 
-            String SQL = "update manager " + "set username=?, first_name=?, last_name=?, avatar_url=? " + "where id=?";
+            String SQL = "update user " + "set username=?, first_name=?, last_name=?, avatar_url=? " + "where id=?";
             statement = connection.prepareStatement(SQL);
 
-            statement.setString(1, manager.getUsername());
-            statement.setString(2, manager.getFirstName());
-            statement.setString(3, manager.getLastName());
-            statement.setString(4, manager.getAvatar());
-            statement.setInt(5, manager.getId());
+            statement.setString(1, user.getUsername());
+            statement.setString(2, user.getFirstName());
+            statement.setString(3, user.getLastName());
+            statement.setString(4, user.getAvatar());
+            statement.setInt(5, user.getId());
 
             statement.execute();
         } finally {
@@ -122,18 +122,18 @@ public class ManagerDAO {
         }
     }
 
-    public void deleteManager(String managerId) throws Exception {
+    public void deleteUser(String userId) throws Exception {
         Connection connection = null;
         PreparedStatement statement = null;
 
         int id;
 
         try {
-            id = Integer.parseInt(managerId);
+            id = Integer.parseInt(userId);
 
             connection = jdbcConfig.establishDBConnection();
 
-            String SQL = "delete from manager where id=?";
+            String SQL = "delete from user where id=?";
             statement = connection.prepareStatement(SQL);
 
             statement.setInt(1, id);
