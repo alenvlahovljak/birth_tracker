@@ -15,7 +15,7 @@ public class OrderDAO {
         int id = resultSet.getInt("id");
         int userId = resultSet.getInt("user_id");
         int partyId = resultSet.getInt("party_id");
-        float rating = resultSet.getFloat("rating");
+        int rating = resultSet.getInt("rating");
 
         return new Order(id, userId, partyId, rating);
     }
@@ -46,7 +46,6 @@ public class OrderDAO {
         }
     }
 
-
     public Order getOrder(String orderId) throws Exception {
         Connection connection = null;
         PreparedStatement statement = null;
@@ -60,7 +59,7 @@ public class OrderDAO {
 
             connection = jdbcConfig.establishDBConnection();
 
-            String SQL = "select * from order where id=?";
+            String SQL = "select * from `order` where id=?";
             statement = connection.prepareStatement(SQL);
             statement.setInt(1, id);
 
@@ -85,12 +84,11 @@ public class OrderDAO {
         try {
             connection = jdbcConfig.establishDBConnection();
 
-            String SQL = "insert into order " + "(user_id, party_id, rating) " + "value (?, ?, ?)";
+            String SQL = "insert into `order` " + "(user_id, party_id) " + "value (?, ?)";
             statement = connection.prepareStatement(SQL);
 
             statement.setInt(1, order.getUserId());
             statement.setInt(2, order.getPartyId());
-            statement.setFloat(3, order.getRating());
 
             statement.executeUpdate();
         } finally {
@@ -105,13 +103,11 @@ public class OrderDAO {
         try {
             connection = jdbcConfig.establishDBConnection();
 
-            String SQL = "update order " + "set user_id=?, party_id=?, rating=? " + "where id=?";
+            String SQL = "update `order` " + "set rating=? " + "where id=?";
             statement = connection.prepareStatement(SQL);
 
-            statement.setInt(1, order.getUserId());
-            statement.setInt(2, order.getPartyId());
-            statement.setFloat(3, order.getRating());
-            statement.setInt(4, order.getId());
+            statement.setFloat(1, order.getRating());
+            statement.setInt(2, order.getId());
 
             statement.execute();
         } finally {
@@ -119,18 +115,18 @@ public class OrderDAO {
         }
     }
 
-    public void deleteOrder(String orderId) throws Exception {
+    public void deleteOrder(String partyId) throws Exception {
         Connection connection = null;
         PreparedStatement statement = null;
 
         int id;
 
         try {
-            id = Integer.parseInt(orderId);
+            id = Integer.parseInt(partyId);
 
             connection = jdbcConfig.establishDBConnection();
 
-            String SQL = "delete from order where id=?";
+            String SQL = "delete from `order` where id=?";
             statement = connection.prepareStatement(SQL);
 
             statement.setInt(1, id);
