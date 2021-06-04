@@ -77,6 +77,6 @@ public class OrganizationController {
 
         organizationDAO.deleteOrganization(id);
 
-        response.sendRedirect(request.getContextPath() + "/StudentControllerServlet?command=LIST");
+        response.sendRedirect(request.getContextPath() + "/OrganizationServlet?command=LIST");
     }
 }
