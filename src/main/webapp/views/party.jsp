@@ -60,7 +60,7 @@
                 <h1 class="display-5 fw-bold">${requestScope.party.name}</h1>
                 <small>by ${requestScope.party.organizationAbbreviation}</small>
                 <p class="col-md-8 fs-4">${requestScope.party.description}</p>
-                <a class="btn btn-primary stretched-link" href="${pageContext.request.contextPath}/">Check out other
+                <a class="btn btn-primary" href="${pageContext.request.contextPath}/">Check out other
                     parties</a>
             </div>
         </div>
@@ -89,7 +89,50 @@
                             Currently it's
                             available ${requestScope.party.maxParticipants - requestScope.party.participants} spots!
                         </p>
-                        <button class="btn btn-outline-secondary" type="button">Reserve</button>
+                        <c:url var="createOrder" value="OrderServlet">
+                            <c:param name="command" value="CREATE"/>
+                            <c:param name="user_id" value="3"/>
+                            <c:param name="party_id" value="${requestScope.party.id}"/>
+                        </c:url>
+                        <c:url var="deleteOrder" value="OrderServlet">
+                            <c:param name="command" value="DELETE"/>
+                            <c:param name="user_id" value="3"/>
+                            <c:param name="party_id" value="${requestScope.party.id}"/>
+                            <c:param name="id" value="${requestScope.party.orderId}"/>
+                        </c:url>
+                        <c:if test="${requestScope.party.orderId == 0}">
+                            <form action="${createOrder}" method="post">
+                                <button class="btn btn-outline-success">Reserve</button>
+                            </form>
+                        </c:if>
+                        <c:if test="${requestScope.party.orderId != 0}">
+                            <a href="${deleteOrder}" class="btn btn-outline-danger">Cancel reservation</a>
+                            <form class="form-group mb-3 mt-5" action="OrderServlet?command=UPDATE" method="post">
+                                <input type="hidden" name="id" value="${requestScope.party.orderId}"/>
+                                <input type="hidden" name="party_id" value="${requestScope.party.id}"/>
+                                <label for="rating">Rate event:</label>
+                                <input type="range"
+                                       class="form-range mt-2"
+                                       id="rating"
+                                       name="rating"
+                                       min="1"
+                                       value="${requestScope.party.rating}"
+                                       max="5"
+                                       onInput="document.getElementById('range').innerText = document.getElementById('rating').value; document.getElementById('rate-btn').disabled = false"
+                                >
+                                <c:if test="${requestScope.party.rating == 0}">
+                                    <span id="range">Not yet rated!</span><br/>
+                                </c:if>
+                                <c:if test="${requestScope.party.rating != 0}">
+                                    <span id="range">Your rating is ${requestScope.party.rating}</span>
+                                </c:if>
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                                    <button disabled id="rate-btn" type="submit" class="btn btn-outline-primary mt-3">
+                                        Rate!
+                                    </button>
+                                </div>
+                            </form>
+                        </c:if>
                     </c:if>
                     <c:if test="${!requestScope.party.hasFreeSpots}">
                         <p>Sorry, no free spots available!</p>

@@ -10,6 +10,9 @@ public class Party {
     private boolean hasFreeSpots;
     private int organizationId;
     private String organizationAbbreviation;
+    private int userId;
+    private int orderId;
+    private int rating;
 
     public Party(String name, String description, String thumbnail, int organizationId) {
         this.name = name;
@@ -68,6 +71,13 @@ public class Party {
         this.organizationAbbreviation = organizationAbbreviation;
     }
 
+    public Party(int id, String name, String description, String thumbnail, int participants, int maxParticipants, boolean hasFreeSpots, int organizationId, String organizationAbbreviation, int userId, int orderId, int rating) {
+    this(id, name, description, thumbnail, participants, maxParticipants, hasFreeSpots, organizationId, organizationAbbreviation);
+    this.userId = userId;
+    this.orderId = orderId;
+    this.rating = rating;
+    }
+
     public int getId() {
         return id;
     }
@@ -102,6 +112,18 @@ public class Party {
 
     public String getOrganizationAbbreviation() {
         return organizationAbbreviation;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public int getRating() {
+        return rating;
     }
 
     public void setId(int id) {
@@ -140,6 +162,18 @@ public class Party {
         this.organizationAbbreviation = organizationAbbreviation;
     }
 
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
     @Override
     public String toString() {
         return "Party{" +
@@ -152,6 +186,9 @@ public class Party {
                 ", hasFreeSpots=" + hasFreeSpots +
                 ", organizationId=" + organizationId +
                 ", organizationAbbreviation='" + organizationAbbreviation + '\'' +
+                ", userId=" + userId +
+                ", orderId=" + orderId +
+                ", rating=" + rating +
                 '}';
     }
 }

@@ -27,6 +27,12 @@ public class Order {
         this.rating = rating;
     }
 
+    public Order(int id, int partyId, int rating) {
+        this.id = id;
+        this.partyId = partyId;
+        this.rating = rating;
+    }
+
     public int getId() {
         return id;
     }

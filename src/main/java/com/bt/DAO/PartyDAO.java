@@ -10,7 +10,7 @@ import java.util.List;
 public class PartyDAO {
     JDBCConfig jdbcConfig = new JDBCConfig();
 
-    public Party retrieveDBModel(ResultSet resultSet) throws SQLException {
+    private Party retrievePartiesDBModel(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("id");
         String name = resultSet.getString("name");
         String description = resultSet.getString("description");
@@ -22,6 +22,23 @@ public class PartyDAO {
         String organizationAbbreviation = resultSet.getString("organization_abbreviation");
 
         return new Party(id, name, description, thumbnail, participants, maxParticipants, hasFreeSpots, organizationId, organizationAbbreviation);
+    }
+
+    private Party retrievePartyDBModel(ResultSet resultSet) throws SQLException {
+        int id = resultSet.getInt("id");
+        String name = resultSet.getString("name");
+        String description = resultSet.getString("description");
+        String thumbnail = resultSet.getString("thumbnail_url");
+        int participants = resultSet.getInt("num_of_participants");
+        int maxParticipants = resultSet.getInt("max_participants");
+        boolean hasFreeSpots = resultSet.getBoolean("has_free_spots");
+        int organizationId = resultSet.getInt("organization_id");
+        String organizationAbbreviation = resultSet.getString("organization_abbreviation");
+        int userId = resultSet.getInt("user_id");
+        int orderId = resultSet.getInt("order_id");
+        int rating = resultSet.getInt("rating");
+
+        return new Party(id, name, description, thumbnail, participants, maxParticipants, hasFreeSpots, organizationId, organizationAbbreviation, userId, orderId, rating);
     }
 
     public List<Party> getParties() throws Exception {
@@ -40,7 +57,7 @@ public class PartyDAO {
             resultSet = statement.executeQuery(SQL);
 
             while (resultSet.next()) {
-                Party party = this.retrieveDBModel(resultSet);
+                Party party = this.retrievePartiesDBModel(resultSet);
                 parties.add(party);
             }
 
@@ -63,7 +80,7 @@ public class PartyDAO {
 
             connection = jdbcConfig.establishDBConnection();
 
-            String SQL = "SELECT p.*, o.abbreviation as organization_abbreviation FROM party AS p LEFT JOIN organization as o ON (p.organization_id=o.id) WHERE p.id=?";
+            String SQL = "SELECT p.*, org.abbreviation as organization_abbreviation, o.user_id, o.id as order_id, o.rating " + "FROM party as p " + "LEFT JOIN organization as org ON (p.organization_id = org.id) " + "LEFT JOIN `order` as o ON (p.id = o.party_id) " + "WHERE p.id =?";
             statement = connection.prepareStatement(SQL);
 
             statement.setInt(1, id);
@@ -71,7 +88,7 @@ public class PartyDAO {
             resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                party = retrieveDBModel(resultSet);
+                party = retrievePartyDBModel(resultSet);
             } else {
                 throw new Exception("Could not find party with id: " + id);
             }
@@ -120,6 +137,31 @@ public class PartyDAO {
             statement.setInt(4, party.getMaxParticipants());
             statement.setInt(5, party.getOrganizationId());
             statement.setInt(6, party.getId());
+
+            statement.execute();
+        } finally {
+            jdbcConfig.closeDBConnection(connection, statement, null);
+        }
+    }
+
+    public void updatePartyParticipants(int partyId, String sign) throws Exception {
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = jdbcConfig.establishDBConnection();
+
+            String SQL;
+
+            if (sign.equals("+")) {
+                SQL = "UPDATE party " + "SET num_of_participants=num_of_participants+1 " + "WHERE id=?";
+            } else {
+                SQL = "UPDATE party " + "SET num_of_participants=num_of_participants-1 " + "WHERE id=?";
+            }
+
+            statement = connection.prepareStatement(SQL);
+
+            statement.setInt(1, partyId);
 
             statement.execute();
         } finally {

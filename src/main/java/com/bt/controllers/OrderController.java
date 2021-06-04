@@ -1,17 +1,15 @@
 package com.bt.controllers;
 
-import com.bt.DAO.ManagerDAO;
 import com.bt.DAO.OrderDAO;
-import com.bt.bean.Manager;
+import com.bt.DAO.PartyDAO;
 import com.bt.bean.Order;
 
-import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 public class OrderController {
     OrderDAO orderDAO = new OrderDAO();
+    PartyDAO partyDAO = new PartyDAO();
 
     public void createOrderController(HttpServletRequest request, HttpServletResponse response) throws Exception {
         int userId = Integer.parseInt(request.getParameter("user_id"));
@@ -19,17 +17,29 @@ public class OrderController {
 
         Order order = new Order(userId, partyId);
         orderDAO.createOrder(order);
+        partyDAO.updatePartyParticipants(partyId, "+");
 
-        response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LIST");
+        response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LOAD&id=" + partyId);
     }
 
-    public void updateOrderRatingController(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void updateOrderController(HttpServletRequest request, HttpServletResponse response) throws Exception {
         int id = Integer.parseInt(request.getParameter("id"));
-        float rating = Float.parseFloat(request.getParameter("rating"));
+        int partyId = Integer.parseInt(request.getParameter("party_id"));
+        int rating = Integer.parseInt(request.getParameter("rating"));
 
-        Order order = new Order(id, rating);
+        Order order = new Order(id, partyId, rating);
         orderDAO.updateOrder(order);
 
-        response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LIST&id=" + id);
+        response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LOAD&id=" + partyId);
+    }
+
+    public void deleteOrderController(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String id = request.getParameter("id");
+        int partyId = Integer.parseInt(request.getParameter("party_id"));
+
+        orderDAO.deleteOrder(id);
+        partyDAO.updatePartyParticipants(partyId, "-");
+
+        response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LOAD&id=" + partyId);
     }
 }
