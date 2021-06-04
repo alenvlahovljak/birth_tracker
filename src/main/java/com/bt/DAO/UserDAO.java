@@ -31,7 +31,7 @@ public class UserDAO {
         try {
             connection = jdbcConfig.establishDBConnection();
 
-            String SQL = "select * from users";
+            String SQL = "select * from user";
             statement = connection.createStatement();
 
             resultSet = statement.executeQuery(SQL);

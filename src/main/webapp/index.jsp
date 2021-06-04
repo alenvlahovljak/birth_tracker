@@ -51,9 +51,17 @@
                     <c:url var="addOrganization" value="OrganizationServlet">
                         <c:param name="command" value="ADD"/>
                     </c:url>
+                    <c:url var="addManager" value="ManagerServlet">
+                        <c:param name="command" value="ADD"/>
+                    </c:url>
+                    <c:url var="addUser" value="UserServlet">
+                        <c:param name="command" value="ADD"/>
+                    </c:url>
                     <ul class="list-unstyled">
                         <li><a href="${addParty}" class="text-white">Add Party</a></li>
                         <li><a href="${addOrganization}" class="text-white">Add Organization</a></li>
+                        <li><a href="${addManager}" class="text-white">Add Manager</a></li>
+                        <li><a href="${addUser}" class="text-white">Add User</a></li>
                     </ul>
                 </div>
             </div>

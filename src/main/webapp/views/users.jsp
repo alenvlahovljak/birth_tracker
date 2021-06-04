@@ -123,7 +123,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach var="user" items="${requestScope.user}">
+                <c:forEach var="user" items="${requestScope.users}">
                     <c:url var="editUser" value="UserServlet">
                         <c:param name="command" value="EDIT"/>
                         <c:param name="id" value="${user.id}"/>
