@@ -19,8 +19,9 @@ public class PartyDAO {
         int maxParticipants = resultSet.getInt("max_participants");
         boolean hasFreeSpots = resultSet.getBoolean("has_free_spots");
         int organizationId = resultSet.getInt("organization_id");
+        String organizationAbbreviation = resultSet.getString("organization_abbreviation");
 
-        return new Party(id, name, description, thumbnail, participants, maxParticipants, hasFreeSpots, organizationId);
+        return new Party(id, name, description, thumbnail, participants, maxParticipants, hasFreeSpots, organizationId, organizationAbbreviation);
     }
 
     public List<Party> getParties() throws Exception {
@@ -33,7 +34,7 @@ public class PartyDAO {
         try {
             connection = jdbcConfig.establishDBConnection();
 
-            String SQL = "select * from party";
+            String SQL = "SELECT p.*, o.abbreviation as organization_abbreviation FROM party AS p LEFT JOIN organization as o ON (p.organization_id=o.id)";
             statement = connection.createStatement();
 
             resultSet = statement.executeQuery(SQL);
@@ -62,8 +63,9 @@ public class PartyDAO {
 
             connection = jdbcConfig.establishDBConnection();
 
-            String SQL = "select * from party where id=?";
+            String SQL = "SELECT p.*, o.abbreviation as organization_abbreviation FROM party AS p LEFT JOIN organization as o ON (p.organization_id=o.id) WHERE p.id=?";
             statement = connection.prepareStatement(SQL);
+
             statement.setInt(1, id);
 
             resultSet = statement.executeQuery();

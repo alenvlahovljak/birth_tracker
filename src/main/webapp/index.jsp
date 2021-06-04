@@ -1,7 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
-<%@page import="com.bt.servlets.PartyServlet" %>
-
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!doctype html>
@@ -11,6 +9,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Stop looking for the perfect birthday. You are in the right place!">
     <meta name="author" content="Alen Vlahovljak">
+
+    <title>Find a perfect party!</title>
 
     <%-- Favicon --%>
     <link rel="apple-touch-icon" sizes="180x180" href="./resources/apple-touch-icon.png?">
@@ -28,38 +28,17 @@
             integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
             crossorigin="anonymous">
     </script>
-
-    <title>Find a perfect party!</title>
-
-    <style>
-        .bd-placeholder-img {
-            font-size: 1.125rem;
-            text-anchor: middle;
-            -webkit-user-select: none;
-            -moz-user-select: none;
-            user-select: none;
-        }
-
-        @media (min-width: 768px) {
-            .bd-placeholder-img-lg {
-                font-size: 3.5rem;
-            }
-        }
-    </style>
-
-
 </head>
 <body>
-
 <header>
     <div class="collapse bg-dark" id="navbarHeader">
         <div class="container">
             <div class="row">
                 <div class="col-sm-8 col-md-7 py-4">
-                    <h4 class="text-white">About</h4>
-                    <p class="text-muted">Add some information about the album below, the author, or any other
-                        background context. Make it a few sentences long so folks can pick up some informative tidbits.
-                        Then, link them off to some social networking sites or contact information.</p>
+                    <h4 class="text-white">About Us</h4>
+                    <p class="text-muted">We're assisting in providing the best birthday parties in town!</p>
+                    <a href="${pageContext.request.contextPath}/PartyServlet?command=LIST" class="btn btn-outline-secondary">Parties</a>
+                    <a href="${pageContext.request.contextPath}/OrganizationServlet?command=LIST" class="btn btn-outline-secondary">Organizations</a>
                 </div>
                 <div class="col-sm-4 offset-md-1 py-4">
                     <h4 class="text-white mb-4">My company name | User</h4>
@@ -115,17 +94,21 @@
             <c:if test="${requestScope.parties.size() != 0}">
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
                     <c:forEach var="party" items="${requestScope.parties}">
-                        <c:url var="read" value="PartyServlet">
+                        <c:url var="readParty" value="PartyServlet">
                             <c:param name="command" value="LOAD"/>
                             <c:param name="id" value="${party.id}"/>
                         </c:url>
-                        <c:url var="edit" value="PartyServlet">
+                        <c:url var="editParty" value="PartyServlet">
                             <c:param name="command" value="EDIT"/>
                             <c:param name="id" value="${party.id}"/>
                         </c:url>
-                        <c:url var="delete" value="PartyServlet">
+                        <c:url var="deleteParty" value="PartyServlet">
                             <c:param name="command" value="DELETE"/>
                             <c:param name="id" value="${party.id}"/>
+                        </c:url>
+                        <c:url var="readOrganization" value="OrganizationServlet">
+                            <c:param name="command" value="LOAD"/>
+                            <c:param name="id" value="${party.organizationId}"/>
                         </c:url>
                         <div class="col">
                             <div class="card shadow-sm">
@@ -143,11 +126,12 @@
                                     <p class="card-text">${party.description}</p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
-                                            <a class="btn btn-sm btn-outline-secondary" href="${read}">View</a>
-                                            <a class="btn btn-sm btn-outline-secondary" href="${edit}">Edit</a>
-                                            <a class="btn btn-sm btn-outline-danger" href="${delete}">Delete</a>
+                                            <a class="btn btn-sm btn-outline-secondary" href="${readParty}">View</a>
+                                            <a class="btn btn-sm btn-outline-secondary" href="${editParty}">Edit</a>
+                                            <a class="btn btn-sm btn-outline-danger" href="${deleteParty}">Delete</a>
                                         </div>
-                                        <small class="text-muted">9 mins</small>
+                                        <small class="text-muted">By: <a href="${readOrganization}"
+                                                                         class="link-danger">${party.organizationAbbreviation}</a></small>
                                     </div>
                                 </div>
                             </div>

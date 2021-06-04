@@ -1,7 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
-<%@page import="com.bt.*" %>
-
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!doctype html>
@@ -60,6 +58,7 @@
         <div class="p-5 mb-4 bg-light rounded-3 background">
             <div class="container-fluid py-5 info">
                 <h1 class="display-5 fw-bold">${requestScope.party.name}</h1>
+                <small>by ${requestScope.party.organizationAbbreviation}</small>
                 <p class="col-md-8 fs-4">${requestScope.party.description}</p>
                 <a class="btn btn-primary stretched-link" href="${pageContext.request.contextPath}/">Check out other
                     parties</a>

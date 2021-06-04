@@ -9,6 +9,7 @@ public class Party {
     private int maxParticipants;
     private boolean hasFreeSpots;
     private int organizationId;
+    private String organizationAbbreviation;
 
     public Party(String name, String description, String thumbnail, int organizationId) {
         this.name = name;
@@ -55,6 +56,11 @@ public class Party {
         this.organizationId = organizationId;
     }
 
+    public Party(int id, String name, String description, String thumbnail, int participants, int maxParticipants, boolean hasFreeSpots, int organizationId, String organizationAbbreviation) {
+        this(id, name, description, thumbnail, participants, maxParticipants, hasFreeSpots, organizationId);
+        this.organizationAbbreviation = organizationAbbreviation;
+    }
+
     public int getId() {
         return id;
     }
@@ -85,6 +91,10 @@ public class Party {
 
     public int getOrganizationId() {
         return organizationId;
+    }
+
+    public String getOrganizationAbbreviation() {
+        return organizationAbbreviation;
     }
 
     public void setId(int id) {
@@ -119,6 +129,10 @@ public class Party {
         this.organizationId = organizationId;
     }
 
+    public void setOrganizationAbbreviation(String organizationAbbreviation) {
+        this.organizationAbbreviation = organizationAbbreviation;
+    }
+
     @Override
     public String toString() {
         return "Party{" +
@@ -130,6 +144,7 @@ public class Party {
                 ", maxParticipants=" + maxParticipants +
                 ", hasFreeSpots=" + hasFreeSpots +
                 ", organizationId=" + organizationId +
+                ", organizationAbbreviation='" + organizationAbbreviation + '\'' +
                 '}';
     }
 }
