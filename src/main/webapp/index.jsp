@@ -39,6 +39,7 @@
                     <p class="text-muted">We're assisting in providing the best birthday parties in town!</p>
                     <a href="${pageContext.request.contextPath}/PartyServlet?command=LIST" class="btn btn-outline-secondary">Parties</a>
                     <a href="${pageContext.request.contextPath}/OrganizationServlet?command=LIST" class="btn btn-outline-secondary">Organizations</a>
+                    <a href="${pageContext.request.contextPath}/ManagerServlet?command=LIST" class="btn btn-outline-secondary">Managers</a>
                 </div>
                 <div class="col-sm-4 offset-md-1 py-4">
                     <h4 class="text-white mb-4">My company name | User</h4>

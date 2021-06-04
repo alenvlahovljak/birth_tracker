@@ -16,7 +16,7 @@ public class ManagerController {
 
         request.setAttribute("managers", managers);
 
-        RequestDispatcher rd = request.getRequestDispatcher("index.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("./views/managers.jsp");
         rd.forward(request, response);
     }
 
@@ -26,21 +26,35 @@ public class ManagerController {
 
         request.setAttribute("manager", manager);
 
-        RequestDispatcher rd = request.getRequestDispatcher("./views/party.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("./views/manager.jsp");
+        rd.forward(request, response);
+    }
+
+    public void addManagerController(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        RequestDispatcher rd = request.getRequestDispatcher("./views/add-manager.jsp");
         rd.forward(request, response);
     }
 
     public void createManagerController(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String name = request.getParameter("name");
         String username = request.getParameter("username");
         String firstName = request.getParameter("first_name");
         String lastName = request.getParameter("last_name");
         String avatar = request.getParameter("avatar_url");
 
-        Manager manager = new Manager(name, username, firstName, lastName, avatar);
+        Manager manager = new Manager(username, firstName, lastName, avatar);
         managerDAO.createManager(manager);
 
-        response.sendRedirect(request.getContextPath() + "/StudentControllerServlet?command=LIST");
+        response.sendRedirect(request.getContextPath() + "/ManagerServlet?command=LIST");
+    }
+
+    public void editManagerController(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        String id = request.getParameter("id");
+        Manager manager = managerDAO.getManager(id);
+
+        request.setAttribute("manager", manager);
+
+        RequestDispatcher rd = request.getRequestDispatcher("./views/edit-manager.jsp");
+        rd.forward(request, response);
     }
 
     public void updateManagerController(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -54,7 +68,7 @@ public class ManagerController {
         Manager manager = new Manager(id, name, username, firstName, lastName, avatar);
         managerDAO.updateManager(manager);
 
-        response.sendRedirect(request.getContextPath() + "/StudentControllerServlet?command=LIST");
+        response.sendRedirect(request.getContextPath() + "/ManagerServlet?command=LIST");
     }
 
     public void deleteManagerController(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -62,6 +76,6 @@ public class ManagerController {
 
         managerDAO.deleteManager(id);
 
-        response.sendRedirect(request.getContextPath() + "/StudentControllerServlet?command=LIST");
+        response.sendRedirect(request.getContextPath() + "/ManagerServlet?command=LIST");
     }
 }
