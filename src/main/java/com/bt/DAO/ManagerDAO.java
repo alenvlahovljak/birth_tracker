@@ -79,6 +79,35 @@ public class ManagerDAO {
         }
     }
 
+    public Manager getManagerByUsername(String username) throws Exception {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        Manager manager;
+
+        try {
+            connection = jdbcConfig.establishDBConnection();
+
+            String SQL = "select * from manager where username=?";
+            statement = connection.prepareStatement(SQL);
+
+            statement.setString(1, username);
+
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                manager = retrieveDBModel(resultSet);
+            } else {
+                throw new Exception("Could not find manager with username: " + username);
+            }
+
+            return manager;
+        } finally {
+            jdbcConfig.closeDBConnection(connection, statement, resultSet);
+        }
+    }
+
     public void createManager(Manager manager) throws Exception {
         Connection connection = null;
         PreparedStatement statement = null;

@@ -79,6 +79,35 @@ public class UserDAO {
         }
     }
 
+    public User getUserByUsername(String username) throws Exception {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        User user;
+
+        try {
+            connection = jdbcConfig.establishDBConnection();
+
+            String SQL = "select * from `user` where username=?";
+            statement = connection.prepareStatement(SQL);
+
+            statement.setString(1, username);
+
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                user = retrieveDBModel(resultSet);
+            } else {
+                throw new Exception("Could not find user with username: " + username);
+            }
+
+            return user;
+        } finally {
+            jdbcConfig.closeDBConnection(connection, statement, resultSet);
+        }
+    }
+
     public void createUser(User user) throws Exception {
         Connection connection = null;
         PreparedStatement statement = null;

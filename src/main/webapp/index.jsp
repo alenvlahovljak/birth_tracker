@@ -65,6 +65,9 @@
                         <li><a href="${addOrganization}" class="text-white">Add Organization</a></li>
                         <li><a href="${addManager}" class="text-white">Add Manager</a></li>
                         <li><a href="${addUser}" class="text-white">Add User</a></li>
+                        <li><a href="AuthServlet?role=admin">Login as admin</a></li>
+                        <li><a href="AuthServlet?role=manager">Login as manager</a></li>
+                        <li><a href="AuthServlet?role=user">Login as user</a></li>
                     </ul>
                 </div>
             </div>
