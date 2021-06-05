@@ -46,6 +46,7 @@
                 </div>
                 <div class="col-sm-4 offset-md-1 py-4">
                     <h4 class="text-white mb-4">My company name | User</h4>
+                    <h4 class="text-white mb-4">Admin: <c:out value="${requestScope.admin}"/></h4>
                     <button type="button" class="btn btn-outline-secondary">Profile</button>
                     <button type="button" class="btn btn-outline-secondary">Company</button>
                     <c:url var="addParty" value="PartyServlet">

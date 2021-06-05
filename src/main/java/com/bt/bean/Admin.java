@@ -2,28 +2,23 @@ package com.bt.bean;
 
 public class Admin {
     private int id;
+    private int role;
     private String username;
     private String password;
-    private int role;
 
-    public Admin(String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
-
-    public Admin(String username, String password, int role) {
-        this.username = username;
-        this.password = password;
-        this.role = role;
-    }
-
-    public Admin(int id, String username, String password, int role) {
-        this(username, password, role);
+    public Admin(int id, int role, String username, String password) {
         this.id = id;
+        this.role = role;
+        this.username = username;
+        this.password = password;
     }
 
     public int getId() {
         return id;
+    }
+
+    public int getRole() {
+        return role;
     }
 
     public String getUsername() {
@@ -34,12 +29,12 @@ public class Admin {
         return password;
     }
 
-    public int getRole() {
-        return role;
-    }
-
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
     }
 
     public void setUsername(String username) {
@@ -48,9 +43,5 @@ public class Admin {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public void setRole(int role) {
-        this.role = role;
     }
 }

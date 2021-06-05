@@ -1,7 +1,6 @@
 package com.bt.DAO;
 
 import com.bt.bean.Admin;
-import com.bt.bean.Manager;
 import com.bt.db.JDBCConfig;
 
 import java.sql.*;
@@ -11,11 +10,11 @@ public class AdminDAO {
 
     public Admin retrieveDBModel(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("id");
+        int role = Integer.parseInt(resultSet.getString("role"));
         String username = resultSet.getString("username");
         String password = resultSet.getString("password");
-        int role = Integer.parseInt(resultSet.getString("role"));
 
-        return new Admin(id, username, password, role);
+        return new Admin(id, role, username, password);
     }
 
     public Admin getAdminByUsername(String username) throws Exception {
