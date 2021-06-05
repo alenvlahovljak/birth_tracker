@@ -9,6 +9,16 @@ public class Manager {
     private String lastName;
     private String avatar;
 
+    public Manager(int id, String role, String username, String password, String firstName, String lastName, String avatar) {
+        this.id = id;
+        this.role = role;
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.avatar = avatar;
+    }
+
     public Manager(String role, String username, String firstName, String lastName, String avatar) {
         this.role = role;
         this.username = username;

@@ -42,7 +42,7 @@ public class AuthController {
         Admin admin = adminDAO.getAdminByUsername(username);
 
         if (username.equals(admin.getUsername()) && password.equals(admin.getPassword())) {
-            session.setAttribute("admin", admin);
+            session.setAttribute("client", admin);
             response.sendRedirect(request.getContextPath() + "/ManagerServlet?command=LIST");
         } else {
             response.sendRedirect(request.getContextPath() + "/AuthServlet?role=admin");
@@ -58,7 +58,7 @@ public class AuthController {
         Manager manager = managerDAO.getManagerByUsername(username);
 
         if (username.equals(manager.getUsername()) && password.equals(manager.getPassword())) {
-            session.setAttribute("manager", manager);
+            session.setAttribute("client", manager);
             response.sendRedirect(request.getContextPath() + "/OrganizationServlet?command=LIST");
         } else {
             response.sendRedirect(request.getContextPath() + "/AuthServlet?role=manager");
@@ -74,7 +74,7 @@ public class AuthController {
         User user = userDAO.getUserByUsername(username);
 
         if (username.equals(user.getUsername()) && password.equals(user.getPassword())) {
-            session.setAttribute("user", user);
+            session.setAttribute("client", user);
             response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LIST");
         } else {
             response.sendRedirect(request.getContextPath() + "/AuthServlet?role=user");

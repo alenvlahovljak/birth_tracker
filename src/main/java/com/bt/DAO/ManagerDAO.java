@@ -21,6 +21,18 @@ public class ManagerDAO {
         return new Manager(id, role, username, firstName, lastName, avatar);
     }
 
+    public Manager retrieveAuthDBModel(ResultSet resultSet) throws SQLException {
+        int id = resultSet.getInt("id");
+        String role = resultSet.getString("role");
+        String username = resultSet.getString("username");
+        String password = resultSet.getString("password");
+        String firstName = resultSet.getString("first_name");
+        String lastName = resultSet.getString("last_name");
+        String avatar = resultSet.getString("avatar_url");
+
+        return new Manager(id, role, username, password, firstName, lastName, avatar);
+    }
+
     public List<Manager> getManagers() throws Exception {
         Connection connection = null;
         Statement statement = null;
@@ -97,7 +109,7 @@ public class ManagerDAO {
             resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
-                manager = retrieveDBModel(resultSet);
+                manager = retrieveAuthDBModel(resultSet);
             } else {
                 throw new Exception("Could not find manager with username: " + username);
             }
