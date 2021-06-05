@@ -37,9 +37,12 @@
                 <div class="col-sm-8 col-md-7 py-4">
                     <h4 class="text-white">About Us</h4>
                     <p class="text-muted">We're assisting in providing the best birthday parties in town!</p>
-                    <a href="${pageContext.request.contextPath}/PartyServlet?command=LIST" class="btn btn-outline-secondary">Parties</a>
-                    <a href="${pageContext.request.contextPath}/OrganizationServlet?command=LIST" class="btn btn-outline-secondary">Organizations</a>
-                    <a href="${pageContext.request.contextPath}/ManagerServlet?command=LIST" class="btn btn-outline-secondary">Managers</a>
+                    <a href="${pageContext.request.contextPath}/PartyServlet?command=LIST"
+                       class="btn btn-outline-secondary">Parties</a>
+                    <a href="${pageContext.request.contextPath}/OrganizationServlet?command=LIST"
+                       class="btn btn-outline-secondary">Organizations</a>
+                    <a href="${pageContext.request.contextPath}/ManagerServlet?command=LIST"
+                       class="btn btn-outline-secondary">Managers</a>
                 </div>
                 <div class="col-sm-4 offset-md-1 py-4">
                     <h4 class="text-white mb-4">My company name | User</h4>
@@ -132,15 +135,23 @@
                                 </c:if>
                                 <div class="card-body">
                                     <h5 class="card-title">${party.name}</h5>
-                                    <p class="card-text">${party.description}</p>
+                                    <c:if test="${party.description.length() == 0}">
+                                        <p class="card-text">No description has provided!</p>
+                                    </c:if>
+                                    <c:if test="${party.description.length() > 0}">
+                                        <p class="card-text">${party.description}</p>
+                                    </c:if>
                                     <div class="d-flex justify-content-between align-items-center">
+                                        <small class="text-muted">By: <a href="${readOrganization}"
+                                                                         class="link-danger">${party.organizationAbbreviation}</a></small>
+                                    </div>
+                                    <div class="card-footer mt-md-5 d-flex justify-content-between">
                                         <div class="btn-group">
                                             <a class="btn btn-sm btn-outline-secondary" href="${readParty}">View</a>
                                             <a class="btn btn-sm btn-outline-secondary" href="${editParty}">Edit</a>
                                             <a class="btn btn-sm btn-outline-danger" href="${deleteParty}">Delete</a>
                                         </div>
-                                        <small class="text-muted">By: <a href="${readOrganization}"
-                                                                         class="link-danger">${party.organizationAbbreviation}</a></small>
+                                        <p class="text-success"><small>$</small>${party.price}</p>
                                     </div>
                                 </div>
                             </div>

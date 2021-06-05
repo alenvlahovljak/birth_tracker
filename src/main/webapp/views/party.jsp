@@ -1,6 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!doctype html>
 <html lang="en">
@@ -78,11 +79,17 @@
                     <c:if test="${requestScope.party.hasFreeSpots}">
                         <p>Here you can check your profile's discount</p>
                         <p>You have ${discount}% to apply as discount.</p>
+                        <fmt:formatNumber var="discountPrice"
+                                          value="${requestScope.party.price - (requestScope.party.price * discount) / 100}"
+                                          maxFractionDigits="2"/>
                         <div class="d-grid gap-4 d-flex">
                             <img src="https://cdn.iconscout.com/icon/free/png-256/gift-card-1817226-1538096.png"
-                                 alt="Coupon icon" height="150px"/>
-                            <p class="align-self-center display-6">Price: <s><small>$</small>40</s>
-                                <strong><small>$</small>37</strong></p>
+                                 alt="Coupon icon" height="120px"/>
+                            <p class="align-self-center h2">Price: <s
+                                    class="text-muted"><small>$</small>${requestScope.party.price}
+                            </s>
+                                <strong><small>$</small>${discountPrice}</strong>
+                            </p>
                         </div>
                     </c:if>
                     <c:if test="${requestScope.party.hasFreeSpots}">
