@@ -28,7 +28,7 @@ public class OrderController {
         int rating = Integer.parseInt(request.getParameter("rating"));
 
         Order order = new Order(id, partyId, rating);
-        orderDAO.updateOrder(order);
+        orderDAO.updateOrderRating(order);
 
         response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LOAD&id=" + partyId);
     }

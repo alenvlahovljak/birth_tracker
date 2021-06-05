@@ -30,7 +30,7 @@ public class OrderDAO {
         try {
             connection = jdbcConfig.establishDBConnection();
 
-            String SQL = "select * from order";
+            String SQL = "select * from `order`";
             statement = connection.createStatement();
 
             resultSet = statement.executeQuery(SQL);
@@ -96,7 +96,7 @@ public class OrderDAO {
         }
     }
 
-    public void updateOrder(Order order) throws Exception {
+    public void updateOrderRating(Order order) throws Exception {
         Connection connection = null;
         PreparedStatement statement = null;
 
