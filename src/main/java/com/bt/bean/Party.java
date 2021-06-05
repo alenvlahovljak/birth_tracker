@@ -14,6 +14,7 @@ public class Party {
     private int userId;
     private int orderId;
     private int rating;
+    private boolean hasDiscount;
 
     public Party(String name, String description, String thumbnail, int organizationId) {
         this.name = name;
@@ -99,6 +100,11 @@ public class Party {
         this.price = price;
     }
 
+    public Party(int id, String name, String description, String thumbnail, int participants, int maxParticipants, boolean hasFreeSpots, float price, int organizationId, String organizationAbbreviation, int userId, int orderId, int rating, boolean hasDiscount) {
+        this(id, name, description, thumbnail, participants, maxParticipants, hasFreeSpots, price, organizationId, organizationAbbreviation, userId, orderId, rating);
+        this.hasDiscount = hasDiscount;
+    }
+
     public int getId() {
         return id;
     }
@@ -149,6 +155,10 @@ public class Party {
 
     public int getRating() {
         return rating;
+    }
+
+    public boolean isHasDiscount() {
+        return hasDiscount;
     }
 
     public void setId(int id) {
@@ -203,6 +213,10 @@ public class Party {
         this.rating = rating;
     }
 
+    public void setHasDiscount(boolean hasDiscount) {
+        this.hasDiscount = hasDiscount;
+    }
+
     @Override
     public String toString() {
         return "Party{" +
@@ -213,11 +227,13 @@ public class Party {
                 ", participants=" + participants +
                 ", maxParticipants=" + maxParticipants +
                 ", hasFreeSpots=" + hasFreeSpots +
+                ", price=" + price +
                 ", organizationId=" + organizationId +
                 ", organizationAbbreviation='" + organizationAbbreviation + '\'' +
                 ", userId=" + userId +
                 ", orderId=" + orderId +
                 ", rating=" + rating +
+                ", hasDiscount=" + hasDiscount +
                 '}';
     }
 }

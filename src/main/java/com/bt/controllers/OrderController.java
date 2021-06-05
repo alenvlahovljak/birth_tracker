@@ -22,13 +22,24 @@ public class OrderController {
         response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LOAD&id=" + partyId);
     }
 
-    public void updateOrderController(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public void updateOrderRatingController(HttpServletRequest request, HttpServletResponse response) throws Exception {
         int id = Integer.parseInt(request.getParameter("id"));
         int partyId = Integer.parseInt(request.getParameter("party_id"));
         int rating = Integer.parseInt(request.getParameter("rating"));
 
         Order order = new Order(id, partyId, rating);
         orderDAO.updateOrderRating(order);
+
+        response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LOAD&id=" + partyId);
+    }
+
+    public void updateOrderDiscountController(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        int id = Integer.parseInt(request.getParameter("id"));
+        int partyId = Integer.parseInt(request.getParameter("party_id"));
+        boolean hasDiscount = Boolean.parseBoolean(request.getParameter("discount"));
+
+        Order order = new Order(id, partyId, hasDiscount);
+        orderDAO.updateOrderDiscount(order);
 
         response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LOAD&id=" + partyId);
     }

@@ -15,8 +15,9 @@ public class OrderDAO {
         int userId = resultSet.getInt("user_id");
         int partyId = resultSet.getInt("party_id");
         int rating = resultSet.getInt("rating");
+        boolean hasDiscount = resultSet.getBoolean("has_discount");
 
-        return new Order(id, userId, partyId, rating);
+        return new Order(id, userId, partyId, rating, hasDiscount);
     }
 
     public List<Order> getOrders() throws Exception {
@@ -138,6 +139,25 @@ public class OrderDAO {
             statement = connection.prepareStatement(SQL);
 
             statement.setFloat(1, order.getRating());
+            statement.setInt(2, order.getId());
+
+            statement.execute();
+        } finally {
+            jdbcConfig.closeDBConnection(connection, statement, null);
+        }
+    }
+
+    public void updateOrderDiscount(Order order) throws Exception {
+        Connection connection = null;
+        PreparedStatement statement = null;
+
+        try {
+            connection = jdbcConfig.establishDBConnection();
+
+            String SQL = "update `order` " + "set has_discount=? " + "where id=?";
+            statement = connection.prepareStatement(SQL);
+
+            statement.setBoolean(1, order.isHasDiscount());
             statement.setInt(2, order.getId());
 
             statement.execute();

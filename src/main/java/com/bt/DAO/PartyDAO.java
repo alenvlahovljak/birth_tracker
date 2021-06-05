@@ -39,8 +39,9 @@ public class PartyDAO {
         int userId = resultSet.getInt("user_id");
         int orderId = resultSet.getInt("order_id");
         int rating = resultSet.getInt("rating");
+        boolean hasDiscount = resultSet.getBoolean("has_discount");
 
-        return new Party(id, name, description, thumbnail, participants, maxParticipants, hasFreeSpots, price, organizationId, organizationAbbreviation, userId, orderId, rating);
+        return new Party(id, name, description, thumbnail, participants, maxParticipants, hasFreeSpots, price, organizationId, organizationAbbreviation, userId, orderId, rating, hasDiscount);
     }
 
     public List<Party> getParties() throws Exception {
@@ -82,7 +83,7 @@ public class PartyDAO {
 
             connection = jdbcConfig.establishDBConnection();
 
-            String SQL = "SELECT p.*, org.abbreviation as organization_abbreviation, o.user_id, o.id as order_id, o.rating " + "FROM party as p " + "LEFT JOIN organization as org ON (p.organization_id = org.id) " + "LEFT JOIN `order` as o ON (p.id = o.party_id) " + "WHERE p.id =?";
+            String SQL = "SELECT p.*, org.abbreviation as organization_abbreviation, o.user_id, o.id as order_id, o.rating, o.has_discount " + "FROM party as p " + "LEFT JOIN organization as org ON (p.organization_id = org.id) " + "LEFT JOIN `order` as o ON (p.id = o.party_id) " + "WHERE p.id =?";
             statement = connection.prepareStatement(SQL);
 
             statement.setInt(1, id);

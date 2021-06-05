@@ -34,10 +34,16 @@ public class OrderServlet extends HttpServlet {
                 command = "CREATE";
             }
 
-            if (command.equals("CREATE")) {
-                orderController.createOrderController(request, response);
-            } else if (command.equals("UPDATE")) {
-                orderController.updateOrderController(request, response);
+            switch (command) {
+                case "CREATE":
+                    orderController.createOrderController(request, response);
+                    break;
+                case "RATING":
+                    orderController.updateOrderRatingController(request, response);
+                    break;
+                case "DISCOUNT":
+                    orderController.updateOrderDiscountController(request, response);
+                    break;
             }
         } catch (Exception exception) {
             exception.printStackTrace();

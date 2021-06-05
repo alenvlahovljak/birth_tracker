@@ -73,10 +73,10 @@
                            value="${requestScope.discount < 30 ? requestScope.discount : 30}"/>
 
                     <h2>Discount</h2>
-                    <c:if test="${!requestScope.party.hasFreeSpots}">
-                        <p>This event is no more available!</p>
+                    <c:if test="${!requestScope.party.hasFreeSpots || discount == 0}">
+                        <p>Discount store is currently not available!</p>
                     </c:if>
-                    <c:if test="${requestScope.party.hasFreeSpots}">
+                    <c:if test="${requestScope.party.hasFreeSpots && discount > 0}">
                         <p>Here you can check your profile's discount</p>
                         <p>You have ${discount}% to apply as discount.</p>
                         <fmt:formatNumber var="discountPrice"
@@ -92,8 +92,16 @@
                             </p>
                         </div>
                     </c:if>
-                    <c:if test="${requestScope.party.hasFreeSpots}">
-                        <button class="btn btn-outline-light" type="button">Apply coupon</button>
+                    <c:if test="${requestScope.party.hasFreeSpots && !requestScope.party.hasDiscount && discount > 0}">
+                        <form action="OrderServlet?command=DISCOUNT" method="post">
+                            <input type="hidden" name="id" value="${requestScope.party.orderId}"/>
+                            <input type="hidden" name="party_id" value="${requestScope.party.id}"/>
+                            <input type="hidden" name="discount" value="true"/>
+                            <button class="btn btn-outline-light" type="submit">Apply coupon</button>
+                        </form>
+                    </c:if>
+                    <c:if test="${requestScope.party.hasFreeSpots && requestScope.party.hasDiscount}">
+                        <button disabled class="btn btn-secondary" type="submit">Coupon applied</button>
                     </c:if>
                 </div>
             </div>
@@ -123,7 +131,7 @@
                         </c:if>
                         <c:if test="${requestScope.party.orderId != 0}">
                             <a href="${deleteOrder}" class="btn btn-outline-danger">Cancel reservation</a>
-                            <form class="form-group mb-3 mt-5" action="OrderServlet?command=UPDATE" method="post">
+                            <form class="form-group mb-3 mt-5" action="OrderServlet?command=RATING" method="post">
                                 <input type="hidden" name="id" value="${requestScope.party.orderId}"/>
                                 <input type="hidden" name="party_id" value="${requestScope.party.id}"/>
                                 <label for="rating">Rate event:</label>
