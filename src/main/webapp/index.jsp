@@ -37,18 +37,35 @@
                 <div class="col-sm-8 col-md-7 py-4">
                     <h4 class="text-white">About Us</h4>
                     <p class="text-muted">We're assisting in providing the best birthday parties in town!</p>
-                    <a href="${pageContext.request.contextPath}/PartyServlet?command=LIST"
-                       class="btn btn-outline-secondary">Parties</a>
-                    <a href="${pageContext.request.contextPath}/OrganizationServlet?command=LIST"
-                       class="btn btn-outline-secondary">Organizations</a>
-                    <a href="${pageContext.request.contextPath}/ManagerServlet?command=LIST"
-                       class="btn btn-outline-secondary">Managers</a>
+                    <c:if test="${sessionScope.client.role == 1}">
+                        <a href="${pageContext.request.contextPath}/PartyServlet?command=LIST"
+                           class="btn btn-outline-secondary">Parties</a>
+                        <a href="${pageContext.request.contextPath}/OrganizationServlet?command=LIST"
+                           class="btn btn-outline-secondary">Organizations</a>
+                        <a href="${pageContext.request.contextPath}/ManagerServlet?command=LIST"
+                           class="btn btn-outline-secondary">Managers</a>
+                        <a href="${pageContext.request.contextPath}/UserServlet?command=LIST"
+                           class="btn btn-outline-secondary">Users</a>
+                    </c:if>
+                    <c:if test="${sessionScope.client.role != 1}">
+                        <a href="${pageContext.request.contextPath}/PartyServlet?command=LIST"
+                           class="btn btn-outline-secondary">Parties</a>
+                        <a href="${pageContext.request.contextPath}/OrganizationServlet?command=LIST"
+                           class="btn btn-outline-secondary">Organizations</a>
+                    </c:if>
                 </div>
                 <div class="col-sm-4 offset-md-1 py-4">
-                    <h4 class="text-white mb-4">My company name | User</h4>
-                    <h4 class="text-white mb-4">Admin: <c:out value="${sessionScope.client.username}"/></h4>
-                    <button type="button" class="btn btn-outline-secondary">Profile</button>
-                    <button type="button" class="btn btn-outline-secondary">Company</button>
+                    <c:if test="${sessionScope.client.role == 1}">
+                        <h4 class="text-white mb-4">${sessionScope.client.username} | Admin</h4>
+                    </c:if>
+                    <c:if test="${sessionScope.client.role == 2}">
+                        <h4 class="text-white mb-4">${sessionScope.client.firstName} ${sessionScope.client.lastName} |
+                            Manager</h4>
+                    </c:if>
+                    <c:if test="${sessionScope.client.role == 3}">
+                        <h4 class="text-white mb-4">${sessionScope.client.firstName} ${sessionScope.client.lastName} |
+                            User</h4>
+                    </c:if>
                     <c:url var="addParty" value="PartyServlet">
                         <c:param name="command" value="ADD"/>
                     </c:url>
@@ -61,14 +78,30 @@
                     <c:url var="addUser" value="UserServlet">
                         <c:param name="command" value="ADD"/>
                     </c:url>
+                    <c:url var="addManager" value="ManagerServlet">
+                        <c:param name="command" value="ADD"/>
+                    </c:url>
                     <ul class="list-unstyled">
-                        <li><a href="${addParty}" class="text-white">Add Party</a></li>
-                        <li><a href="${addOrganization}" class="text-white">Add Organization</a></li>
-                        <li><a href="${addManager}" class="text-white">Add Manager</a></li>
-                        <li><a href="${addUser}" class="text-white">Add User</a></li>
-                        <li><a href="AuthServlet?role=admin">Login as admin</a></li>
-                        <li><a href="AuthServlet?role=manager">Login as manager</a></li>
-                        <li><a href="AuthServlet?role=user">Login as user</a></li>
+                        <c:if test="${sessionScope.client.role == 1}">
+                            <li><a href="${addManager}" class="text-white">Add Manager</a></li>
+                            <li><a href="${addUser}" class="text-white">Add User</a></li>
+                            <li><a href="${addOrganization}" class="text-white">Add Organization</a></li>
+                            <li><a href="${addParty}" class="text-white">Add Party</a></li>
+                        </c:if>
+                        <c:if test="${sessionScope.client.role == 2}">
+                            <li><a href="${addOrganization}" class="text-white">Add Organization</a></li>
+                            <li><a href="${addParty}" class="text-white">Add Party</a></li>
+                            <%--                            To DO only list of organization where this manager is--%>
+                            <%--                            To DO when admin he can add any org--%>
+                        </c:if>
+                        <c:if test="${sessionScope.client != null}">
+                            <li><a href="AuthServlet?role=admin">Login out</a></li>
+                        </c:if>
+                        <c:if test="${sessionScope.client == null}">
+                            <li><a href="AuthServlet?role=admin">Login as admin</a></li>
+                            <li><a href="AuthServlet?role=manager">Login as manager</a></li>
+                            <li><a href="AuthServlet?role=user">Login as user</a></li>
+                        </c:if>
                     </ul>
                 </div>
             </div>
