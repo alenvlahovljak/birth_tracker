@@ -19,8 +19,8 @@ public class AuthenticationUtil {
     public void authenticateAdmin(HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession();
 
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        String username = request.getParameter("username").trim();
+        String password = request.getParameter("password").trim();
 
         Admin admin = adminDAO.getAdminByUsername(username);
 
@@ -40,8 +40,8 @@ public class AuthenticationUtil {
     public void authenticateManager(HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession();
 
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        String username = request.getParameter("username").trim();
+        String password = request.getParameter("password").trim();
 
         Manager manager = managerDAO.getManagerByUsername(username);
 
@@ -61,8 +61,8 @@ public class AuthenticationUtil {
     public void authenticateUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
         HttpSession session = request.getSession();
 
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+        String username = request.getParameter("username").trim();
+        String password = request.getParameter("password").trim();
 
         User user = userDAO.getUserByUsername(username);
 

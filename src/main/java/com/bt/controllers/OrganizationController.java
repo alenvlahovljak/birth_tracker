@@ -17,7 +17,7 @@ public class OrganizationController {
 
         request.setAttribute("organizations", organizations);
 
-        RequestDispatcher rd = request.getRequestDispatcher("./views/organizations.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("./views/organization/organizations.jsp");
         rd.forward(request, response);
     }
 

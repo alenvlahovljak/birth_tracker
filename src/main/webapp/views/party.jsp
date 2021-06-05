@@ -67,6 +67,7 @@
 
         <%--                            To DO only list of organization where this manager is--%>
         <%--                            To DO when admin he can add any org--%>
+<%--        TO DO trim white space on all fileds--%>
 
         <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-5">
             <a class="btn btn-warning me-md-2" href="${editParty}">Edit</a>
