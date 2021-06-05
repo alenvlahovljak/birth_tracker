@@ -51,9 +51,13 @@
                                     <p class="card-text mb-auto">${organization.description}</p>
                                     <div class="btn-group">
                                         <a class="btn btn-sm btn-outline-secondary" href="${organizationRoute}">View</a>
-                                        <a class="btn btn-sm btn-outline-secondary"
-                                           href="${editOrganizationRoute}">Edit</a>
-                                        <a class="btn btn-sm btn-outline-danger" href="${deleteOrganizationRoute}">Delete</a>
+                                        <c:if test="${client.role == 1 || client.role == 2}">
+                                            <a class="btn btn-sm btn-outline-secondary"
+                                               href="${editOrganizationRoute}">Edit</a>
+                                        </c:if>
+                                        <c:if test="${client.role == 1}">
+                                            <a class="btn btn-sm btn-outline-danger" href="${deleteOrganizationRoute}">Delete</a>
+                                        </c:if>
                                     </div>
                                 </div>
                                 <div class="col-auto d-none d-lg-block">
