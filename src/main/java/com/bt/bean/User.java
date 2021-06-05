@@ -4,9 +4,20 @@ public class User {
     private int id;
     private String role;
     private String username;
+    private String password;
     private String firstName;
     private String lastName;
     private String avatar;
+
+    public User(int id, String role, String username, String password, String firstName, String lastName, String avatar) {
+        this.id = id;
+        this.role = role;
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.avatar = avatar;
+    }
 
     public User(int id, String role, String username, String firstName, String lastName, String avatar) {
         this.id = id;

@@ -31,7 +31,7 @@
 <body class="text-center">
 
 <main class="form-signin">
-    <form action="AuthServlet?role=admin" method="post">
+    <form action="AuthServlet?role=user" method="post">
         <img class="mb-4" src="../../resources/android-chrome-512x512.png" alt="" width="72" height="57">
         <h1 class="h3 mb-3 fw-normal">Please sign in as user</h1>
 
