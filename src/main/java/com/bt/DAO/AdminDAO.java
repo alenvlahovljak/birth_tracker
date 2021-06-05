@@ -37,7 +37,7 @@ public class AdminDAO {
             if (resultSet.next()) {
                 admin = retrieveDBModel(resultSet);
             } else {
-                throw new Exception("Could not find admin with username: " + username);
+                return null;
             }
 
             return admin;

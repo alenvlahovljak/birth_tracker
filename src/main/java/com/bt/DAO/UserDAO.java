@@ -111,7 +111,7 @@ public class UserDAO {
             if (resultSet.next()) {
                 user = retrieveAuthDBModel(resultSet);
             } else {
-                throw new Exception("Could not find user with username: " + username);
+                return null;
             }
 
             return user;

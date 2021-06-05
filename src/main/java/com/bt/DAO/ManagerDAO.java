@@ -111,7 +111,7 @@ public class ManagerDAO {
             if (resultSet.next()) {
                 manager = retrieveAuthDBModel(resultSet);
             } else {
-                throw new Exception("Could not find manager with username: " + username);
+                return null;
             }
 
             return manager;
