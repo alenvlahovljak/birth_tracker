@@ -113,7 +113,8 @@
                 <label for="organization">Organization <small class="form-text text-muted">(required)</small></label>
                 <select id="organization" name="organization_id" class="form-select mt-2">
                     <c:forEach var="organization" items="${requestScope.organizations}">
-                        <option value="${organization.id}">${organization.name} (abbr. ${organization.abbreviation})</option>
+                        <option value="${organization.id}">${organization.name} (abbr. ${organization.abbreviation})
+                        </option>
                     </c:forEach>
                 </select>
 
@@ -136,6 +137,14 @@
                        name="thumbnail_url"
                        placeholder="https://www.example.com"
                 >
+            </div>
+            <div class="form-group mb-3">
+                <label for="price">Price</label>
+                <div class="input-group mb-3 mt-2">
+                    <span class="input-group-text">$</span>
+                    <input type="number" id="price" min="1" max="100" step="1" name="price" class="form-control">
+                    <span class="input-group-text">.00</span>
+                </div>
             </div>
             <div class="form-group mb-3">
                 <label for="maxParticipants">Maximum number of participants</label>

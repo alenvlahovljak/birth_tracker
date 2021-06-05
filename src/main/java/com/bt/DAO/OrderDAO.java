@@ -1,6 +1,5 @@
 package com.bt.DAO;
 
-import com.bt.bean.Manager;
 import com.bt.bean.Order;
 import com.bt.db.JDBCConfig;
 
@@ -41,6 +40,38 @@ public class OrderDAO {
             }
 
             return orders;
+        } finally {
+            jdbcConfig.closeDBConnection(connection, statement, resultSet);
+        }
+    }
+
+    public float getUserDiscount(String userId) throws Exception {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        float discount;
+        int id;
+
+        try {
+            id = Integer.parseInt(userId);
+
+            connection = jdbcConfig.establishDBConnection();
+
+            String SQL = "SELECT COUNT(user_id) * 2.8 as discount " + "FROM `order` " + "WHERE user_id=?";
+            statement = connection.prepareStatement(SQL);
+
+            statement.setInt(1, id);
+
+            resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                discount = resultSet.getFloat("discount");
+            } else {
+                throw new Exception("Could not find order with user_id: " + id);
+            }
+
+            return discount;
         } finally {
             jdbcConfig.closeDBConnection(connection, statement, resultSet);
         }

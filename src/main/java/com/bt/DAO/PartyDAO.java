@@ -18,10 +18,11 @@ public class PartyDAO {
         int participants = resultSet.getInt("num_of_participants");
         int maxParticipants = resultSet.getInt("max_participants");
         boolean hasFreeSpots = resultSet.getBoolean("has_free_spots");
+        float price = resultSet.getFloat("price");
         int organizationId = resultSet.getInt("organization_id");
         String organizationAbbreviation = resultSet.getString("organization_abbreviation");
 
-        return new Party(id, name, description, thumbnail, participants, maxParticipants, hasFreeSpots, organizationId, organizationAbbreviation);
+        return new Party(id, name, description, thumbnail, participants, maxParticipants, hasFreeSpots, price, organizationId, organizationAbbreviation);
     }
 
     private Party retrievePartyDBModel(ResultSet resultSet) throws SQLException {
@@ -32,13 +33,14 @@ public class PartyDAO {
         int participants = resultSet.getInt("num_of_participants");
         int maxParticipants = resultSet.getInt("max_participants");
         boolean hasFreeSpots = resultSet.getBoolean("has_free_spots");
+        float price = resultSet.getFloat("price");
         int organizationId = resultSet.getInt("organization_id");
         String organizationAbbreviation = resultSet.getString("organization_abbreviation");
         int userId = resultSet.getInt("user_id");
         int orderId = resultSet.getInt("order_id");
         int rating = resultSet.getInt("rating");
 
-        return new Party(id, name, description, thumbnail, participants, maxParticipants, hasFreeSpots, organizationId, organizationAbbreviation, userId, orderId, rating);
+        return new Party(id, name, description, thumbnail, participants, maxParticipants, hasFreeSpots, price, organizationId, organizationAbbreviation, userId, orderId, rating);
     }
 
     public List<Party> getParties() throws Exception {
@@ -106,7 +108,7 @@ public class PartyDAO {
         try {
             connection = jdbcConfig.establishDBConnection();
 
-            String SQL = "insert into party " + "(name, description, thumbnail_url, max_participants, organization_id) " + "value (?, ?, ?, ?, ?)";
+            String SQL = "insert into party " + "(name, description, thumbnail_url, max_participants, organization_id, price) " + "value (?, ?, ?, ?, ?, ?)";
             statement = connection.prepareStatement(SQL);
 
             statement.setString(1, party.getName());
@@ -114,6 +116,7 @@ public class PartyDAO {
             statement.setString(3, party.getThumbnail());
             statement.setInt(4, party.getMaxParticipants());
             statement.setInt(5, party.getOrganizationId());
+            statement.setFloat(6, party.getPrice());
 
             statement.executeUpdate();
         } finally {
@@ -128,15 +131,16 @@ public class PartyDAO {
         try {
             connection = jdbcConfig.establishDBConnection();
 
-            String SQL = "update party " + "set name=?, description=?, thumbnail_url=?, max_participants=?, organization_id=? " + "where id=?";
+            String SQL = "update party " + "set name=?, description=?, thumbnail_url=?, max_participants=?, price=?, organization_id=? " + "where id=?";
             statement = connection.prepareStatement(SQL);
 
             statement.setString(1, party.getName());
             statement.setString(2, party.getDescription());
             statement.setString(3, party.getThumbnail());
             statement.setInt(4, party.getMaxParticipants());
-            statement.setInt(5, party.getOrganizationId());
-            statement.setInt(6, party.getId());
+            statement.setFloat(5, party.getPrice());
+            statement.setInt(6, party.getOrganizationId());
+            statement.setInt(7, party.getId());
 
             statement.execute();
         } finally {

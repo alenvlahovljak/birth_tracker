@@ -1,5 +1,6 @@
 package com.bt.controllers;
 
+import com.bt.DAO.OrderDAO;
 import com.bt.DAO.OrganizationDAO;
 import com.bt.DAO.PartyDAO;
 import com.bt.bean.Organization;
@@ -13,6 +14,7 @@ import java.util.List;
 public class PartyController {
     PartyDAO partyDAO = new PartyDAO();
     OrganizationDAO organizationDAO = new OrganizationDAO();
+    OrderDAO orderDAO = new OrderDAO();
 
     public void getPartiesController(HttpServletRequest request, HttpServletResponse response) throws Exception {
         List<Party> parties = partyDAO.getParties();
@@ -26,8 +28,10 @@ public class PartyController {
     public void getPartyController(HttpServletRequest request, HttpServletResponse response) throws Exception {
         String id = request.getParameter("id");
         Party party = partyDAO.getParty(id);
+        float discount = orderDAO.getUserDiscount("3");
 
         request.setAttribute("party", party);
+        request.setAttribute("discount", discount);
 
         RequestDispatcher rd = request.getRequestDispatcher("./views/party.jsp");
         rd.forward(request, response);
@@ -47,9 +51,10 @@ public class PartyController {
         String description = request.getParameter("description");
         String thumbnail = request.getParameter("thumbnail_url");
         int maxParticipants = Integer.parseInt(request.getParameter("max_participants"));
+        float price = Float.parseFloat(request.getParameter("price"));
         int organizationId = Integer.parseInt(request.getParameter("organization_id"));
 
-        Party party = new Party(name, description, thumbnail, maxParticipants, organizationId);
+        Party party = new Party(name, description, thumbnail, maxParticipants, price, organizationId);
         partyDAO.createParty(party);
 
         response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LIST");
@@ -73,9 +78,10 @@ public class PartyController {
         String description = request.getParameter("description");
         String thumbnail = request.getParameter("thumbnail_url");
         int maxParticipants = Integer.parseInt(request.getParameter("max_participants"));
+        float price = Float.parseFloat(request.getParameter("price"));
         int organizationId = Integer.parseInt(request.getParameter("organization_id"));
 
-        Party party = new Party(id, name, description, thumbnail, maxParticipants, organizationId);
+        Party party = new Party(id, name, description, thumbnail, maxParticipants, price, organizationId);
         partyDAO.updateParty(party);
 
         response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LIST");

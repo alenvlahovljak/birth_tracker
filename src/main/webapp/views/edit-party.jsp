@@ -3,6 +3,7 @@
 <%@page import="com.bt.servlets.PartyServlet" %>
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!doctype html>
 <html lang="en">
@@ -141,6 +142,17 @@
                        value="${requestScope.party.thumbnail}"
                        placeholder="https://www.example.com"
                 >
+            </div>
+            <div class="form-group mb-3">
+                <fmt:formatNumber var="price" value="${requestScope.party.price}" maxFractionDigits="0"/>
+                <label for="price">Price</label>
+                <div class="input-group mb-3 mt-2">
+                    <span class="input-group-text">$</span>
+                    <input type="number" id="price" min="1" max="100" value="${price}"
+                           step="1"
+                           name="price" class="form-control">
+                    <span class="input-group-text">.00</span>
+                </div>
             </div>
             <div class="form-group mb-3">
                 <label for="maxParticipants">Maximum number of participants</label>

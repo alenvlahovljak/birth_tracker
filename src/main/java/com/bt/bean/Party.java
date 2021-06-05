@@ -8,6 +8,7 @@ public class Party {
     private int participants;
     private int maxParticipants;
     private boolean hasFreeSpots;
+    private float price;
     private int organizationId;
     private String organizationAbbreviation;
     private int userId;
@@ -72,10 +73,30 @@ public class Party {
     }
 
     public Party(int id, String name, String description, String thumbnail, int participants, int maxParticipants, boolean hasFreeSpots, int organizationId, String organizationAbbreviation, int userId, int orderId, int rating) {
-    this(id, name, description, thumbnail, participants, maxParticipants, hasFreeSpots, organizationId, organizationAbbreviation);
-    this.userId = userId;
-    this.orderId = orderId;
-    this.rating = rating;
+        this(id, name, description, thumbnail, participants, maxParticipants, hasFreeSpots, organizationId, organizationAbbreviation);
+        this.userId = userId;
+        this.orderId = orderId;
+        this.rating = rating;
+    }
+
+    public Party(String name, String description, String thumbnail, int maxParticipants, float price, int organizationId) {
+        this(name, description, thumbnail, maxParticipants, organizationId);
+        this.price = price;
+    }
+
+    public Party(int id, String name, String description, String thumbnail, int participants, int maxParticipants, boolean hasFreeSpots, float price, int organizationId, String organizationAbbreviation) {
+        this(id, name, description, thumbnail, participants, maxParticipants, hasFreeSpots, organizationId, organizationAbbreviation);
+        this.price = price;
+    }
+
+    public Party(int id, String name, String description, String thumbnail, int participants, int maxParticipants, boolean hasFreeSpots, float price, int organizationId, String organizationAbbreviation, int userId, int orderId, int rating) {
+        this(id, name, description, thumbnail, participants, maxParticipants, hasFreeSpots, organizationId, organizationAbbreviation, userId, orderId, rating);
+        this.price = price;
+    }
+
+    public Party(int id, String name, String description, String thumbnail, int maxParticipants, float price, int organizationId) {
+        this(id, name, description, thumbnail, maxParticipants, organizationId);
+        this.price = price;
     }
 
     public int getId() {
@@ -104,6 +125,10 @@ public class Party {
 
     public boolean isHasFreeSpots() {
         return hasFreeSpots;
+    }
+
+    public float getPrice() {
+        return price;
     }
 
     public int getOrganizationId() {
@@ -152,6 +177,10 @@ public class Party {
 
     public void setHasFreeSpots(boolean hasFreeSpots) {
         this.hasFreeSpots = hasFreeSpots;
+    }
+
+    public void setPrice(float price) {
+        this.price = price;
     }
 
     public void setOrganizationId(int organizationId) {

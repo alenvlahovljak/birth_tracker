@@ -68,13 +68,22 @@
         <div class="row align-items-md-stretch">
             <div class="col-md-6">
                 <div class="h-100 p-5 text-white bg-dark rounded-3">
+                    <c:set var="discount" scope="page"
+                           value="${requestScope.discount < 30 ? requestScope.discount : 30}"/>
+
                     <h2>Discount</h2>
                     <c:if test="${!requestScope.party.hasFreeSpots}">
                         <p>This event is no more available!</p>
                     </c:if>
                     <c:if test="${requestScope.party.hasFreeSpots}">
                         <p>Here you can check your profile's discount</p>
-                        <p>You have 0% to apply as discount.</p>
+                        <p>You have ${discount}% to apply as discount.</p>
+                        <div class="d-grid gap-4 d-flex">
+                            <img src="https://cdn.iconscout.com/icon/free/png-256/gift-card-1817226-1538096.png"
+                                 alt="Coupon icon" height="150px"/>
+                            <p class="align-self-center display-6">Price: <s><small>$</small>40</s>
+                                <strong><small>$</small>37</strong></p>
+                        </div>
                     </c:if>
                     <c:if test="${requestScope.party.hasFreeSpots}">
                         <button class="btn btn-outline-light" type="button">Apply coupon</button>
