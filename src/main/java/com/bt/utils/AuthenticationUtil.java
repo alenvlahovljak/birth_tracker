@@ -24,7 +24,7 @@ public class AuthenticationUtil {
 
         Admin admin = adminDAO.getAdminByUsername(username);
 
-        if(admin == null){
+        if (admin == null) {
             response.sendRedirect(request.getContextPath() + "/AuthServlet?role=admin");
         }
 

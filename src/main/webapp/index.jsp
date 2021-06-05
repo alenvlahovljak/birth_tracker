@@ -2,6 +2,51 @@
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%--State--%>
+<c:set var="client" value="${sessionScope.client}" scope="page"/>
+<c:set var="parties" value="${requestScope.parties}" scope="page"/>
+<%--state--%>
+
+<%--Links--%>
+<c:url var="authAdminRoute" value="AuthServlet">
+    <c:param name="role" value="admin"/>
+</c:url>
+<c:url var="authManagerRoute" value="AuthServlet">
+    <c:param name="role" value="manager"/>
+</c:url>
+<c:url var="authUserRoute" value="AuthServlet">
+    <c:param name="role" value="user"/>
+</c:url>
+
+<c:url var="addManager" value="ManagerServlet">
+    <c:param name="command" value="ADD"/>
+</c:url>
+<c:url var="managerListRoute" value="ManagerServlet">
+    <c:param name="command" value="LIST"/>
+</c:url>
+
+<c:url var="addOrganization" value="OrganizationServlet">
+    <c:param name="command" value="ADD"/>
+</c:url>
+<c:url var="organizationListRoute" value="OrganizationServlet">
+    <c:param name="command" value="LIST"/>
+</c:url>
+
+<c:url var="addUser" value="UserServlet">
+    <c:param name="command" value="ADD"/>
+</c:url>
+<c:url var="userListRoute" value="UserServlet">
+    <c:param name="command" value="LIST"/>
+</c:url>
+
+<c:url var="addParty" value="PartyServlet">
+    <c:param name="command" value="ADD"/>
+</c:url>
+<c:url var="partyListRoute" value="PartyServlet">
+    <c:param name="command" value="LIST"/>
+</c:url>
+<%--Links--%>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -37,70 +82,59 @@
                 <div class="col-sm-8 col-md-7 py-4">
                     <h4 class="text-white">About Us</h4>
                     <p class="text-muted">We're assisting in providing the best birthday parties in town!</p>
-                    <c:if test="${sessionScope.client.role == 1}">
-                        <a href="${pageContext.request.contextPath}/PartyServlet?command=LIST"
+                    <c:if test="${client.role == 1}">
+                        <a href="${partyListRoute}"
                            class="btn btn-outline-secondary">Parties</a>
-                        <a href="${pageContext.request.contextPath}/OrganizationServlet?command=LIST"
+                        <a href="${organizationListRoute}"
                            class="btn btn-outline-secondary">Organizations</a>
-                        <a href="${pageContext.request.contextPath}/ManagerServlet?command=LIST"
+                        <a href="${managerListRoute}"
                            class="btn btn-outline-secondary">Managers</a>
-                        <a href="${pageContext.request.contextPath}/UserServlet?command=LIST"
+                        <a href="${userListRoute}"
                            class="btn btn-outline-secondary">Users</a>
                     </c:if>
-                    <c:if test="${sessionScope.client.role != 1}">
-                        <a href="${pageContext.request.contextPath}/PartyServlet?command=LIST"
+                    <c:if test="${client.role != 1 && client != null}">
+                        <a href="${partyListRoute}"
                            class="btn btn-outline-secondary">Parties</a>
-                        <a href="${pageContext.request.contextPath}/OrganizationServlet?command=LIST"
+                        <a href="${organizationListRoute}"
                            class="btn btn-outline-secondary">Organizations</a>
+                    </c:if>
+                    <c:if test="${client == null}">
+                        <a href="${partyListRoute}"
+                           class="btn btn-outline-secondary">Parties</a>
                     </c:if>
                 </div>
                 <div class="col-sm-4 offset-md-1 py-4">
-                    <c:if test="${sessionScope.client.role == 1}">
-                        <h4 class="text-white mb-4">${sessionScope.client.username} | Admin</h4>
+                    <c:if test="${client.role == 1}">
+                        <h4 class="text-white mb-4">${client.username} | Admin</h4>
                     </c:if>
-                    <c:if test="${sessionScope.client.role == 2}">
-                        <h4 class="text-white mb-4">${sessionScope.client.firstName} ${sessionScope.client.lastName} |
+                    <c:if test="${client.role == 2}">
+                        <h4 class="text-white mb-4">${client.firstName} ${client.lastName} |
                             Manager</h4>
                     </c:if>
-                    <c:if test="${sessionScope.client.role == 3}">
-                        <h4 class="text-white mb-4">${sessionScope.client.firstName} ${sessionScope.client.lastName} |
+                    <c:if test="${client.role == 3}">
+                        <h4 class="text-white mb-4">${client.firstName} ${client.lastName} |
                             User</h4>
                     </c:if>
-                    <c:url var="addParty" value="PartyServlet">
-                        <c:param name="command" value="ADD"/>
-                    </c:url>
-                    <c:url var="addOrganization" value="OrganizationServlet">
-                        <c:param name="command" value="ADD"/>
-                    </c:url>
-                    <c:url var="addManager" value="ManagerServlet">
-                        <c:param name="command" value="ADD"/>
-                    </c:url>
-                    <c:url var="addUser" value="UserServlet">
-                        <c:param name="command" value="ADD"/>
-                    </c:url>
-                    <c:url var="addManager" value="ManagerServlet">
-                        <c:param name="command" value="ADD"/>
-                    </c:url>
                     <ul class="list-unstyled">
-                        <c:if test="${sessionScope.client.role == 1}">
+                        <c:if test="${client.role == 1}">
                             <li><a href="${addManager}" class="text-white">Add Manager</a></li>
                             <li><a href="${addUser}" class="text-white">Add User</a></li>
                             <li><a href="${addOrganization}" class="text-white">Add Organization</a></li>
                             <li><a href="${addParty}" class="text-white">Add Party</a></li>
                         </c:if>
-                        <c:if test="${sessionScope.client.role == 2}">
+                        <c:if test="${client.role == 2}">
                             <li><a href="${addOrganization}" class="text-white">Add Organization</a></li>
                             <li><a href="${addParty}" class="text-white">Add Party</a></li>
-                            <%--                            To DO only list of organization where this manager is--%>
-                            <%--                            To DO when admin he can add any org--%>
                         </c:if>
-                        <c:if test="${sessionScope.client != null}">
-                            <li><a href="AuthServlet?role=admin">Login out</a></li>
+                        <c:if test="${client != null}">
+                            <li><a href="${authAdminRoute}">Login out</a></li>
                         </c:if>
-                        <c:if test="${sessionScope.client == null}">
-                            <li><a href="AuthServlet?role=admin">Login as admin</a></li>
-                            <li><a href="AuthServlet?role=manager">Login as manager</a></li>
-                            <li><a href="AuthServlet?role=user">Login as user</a></li>
+                        <c:if test="${client == null}">
+                            <div class="d-grid gap-2">
+                                <a class="btn btn-primary" href="${authAdminRoute}">Login as admin</a>
+                                <a class="btn btn-primary" href="${authManagerRoute}">Login as manager</a>
+                                <a class="btn btn-primary" href="${authUserRoute}">Login as user</a>
+                            </div>
                         </c:if>
                     </ul>
                 </div>
@@ -119,9 +153,7 @@
         </div>
     </div>
 </header>
-
 <main>
-
     <section class="py-5 text-center container">
         <div class="row py-lg-5">
             <div class="col-lg-6 col-md-8 mx-auto">
@@ -137,22 +169,14 @@
 
     <div id="parties" class="album py-5 bg-light">
         <div class="container">
-            <c:if test="${requestScope.parties.size() == 0}">
+            <c:if test="${parties.size() == 0}">
                 <h6 class="text-center display-6">No parties available at the moment!</h6>
             </c:if>
-            <c:if test="${requestScope.parties.size() != 0}">
+            <c:if test="${parties.size() != 0}">
                 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-                    <c:forEach var="party" items="${requestScope.parties}">
+                    <c:forEach var="party" items="${parties}">
                         <c:url var="readParty" value="PartyServlet">
                             <c:param name="command" value="LOAD"/>
-                            <c:param name="id" value="${party.id}"/>
-                        </c:url>
-                        <c:url var="editParty" value="PartyServlet">
-                            <c:param name="command" value="EDIT"/>
-                            <c:param name="id" value="${party.id}"/>
-                        </c:url>
-                        <c:url var="deleteParty" value="PartyServlet">
-                            <c:param name="command" value="DELETE"/>
                             <c:param name="id" value="${party.id}"/>
                         </c:url>
                         <c:url var="readOrganization" value="OrganizationServlet">
@@ -185,8 +209,6 @@
                                     <div class="card-footer mt-md-5 d-flex justify-content-between">
                                         <div class="btn-group">
                                             <a class="btn btn-sm btn-outline-secondary" href="${readParty}">View</a>
-                                            <a class="btn btn-sm btn-outline-secondary" href="${editParty}">Edit</a>
-                                            <a class="btn btn-sm btn-outline-danger" href="${deleteParty}">Delete</a>
                                         </div>
                                         <p class="text-success"><small>$</small>${party.price}</p>
                                     </div>
@@ -198,17 +220,13 @@
             </c:if>
         </div>
     </div>
-
 </main>
-
 <footer class="text-muted py-5">
     <div class="container">
         <p class="float-end mb-1">
             <a href="#">Back to top</a>
         </p>
-        <p class="mb-1">Album example is &copy; Bootstrap, but please download and customize it for yourself!</p>
-        <p class="mb-0">New to Bootstrap? <a href="/">Visit the homepage</a> or read our <a
-                href="../getting-started/introduction/">getting started guide</a>.</p>
+        <p class="mb-1">Copyright&copy; 2021 | Birth_TrackeR</p>
     </div>
 </footer>
 </body>
