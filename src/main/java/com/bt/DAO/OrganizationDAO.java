@@ -86,7 +86,7 @@ public class OrganizationDAO {
         try {
             connection = jdbcConfig.establishDBConnection();
 
-            String SQL = "insert into organization " + "(name, abbreviation, description, thumbnail_url, rating) " + "value (?, ?, ?, ?, ?)";
+            String SQL = "insert into organization " + "(name, abbreviation, description, thumbnail_url, rating, manager_id) " + "value (?, ?, ?, ?, ?, ?)";
             statement = connection.prepareStatement(SQL);
 
             statement.setString(1, organization.getName());
@@ -94,6 +94,7 @@ public class OrganizationDAO {
             statement.setString(3, organization.getDescription());
             statement.setString(4, organization.getThumbnail());
             statement.setFloat(5, organization.getRating());
+            statement.setInt(6, organization.getManagerId());
 
             statement.executeUpdate();
         } finally {

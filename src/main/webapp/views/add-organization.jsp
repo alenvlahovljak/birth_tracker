@@ -98,7 +98,7 @@
     <form class="row" action="OrganizationServlet" method="post">
         <div class="col-3"></div>
         <div class="col-6">
-            <input type="hidden" name="manager_id" value="7"/>
+            <input type="hidden" name="manager_id" value="12"/>
             <div class="form-group mb-3">
                 <label for="name">Organization name <small class="form-text text-muted">(required)</small></label>
                 <input type="text"
