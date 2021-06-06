@@ -46,17 +46,14 @@ public class OrderDAO {
         }
     }
 
-    public float getUserDiscount(String userId) throws Exception {
+    public float getUserDiscount(int id) throws Exception {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
         float discount;
-        int id;
 
         try {
-            id = Integer.parseInt(userId);
-
             connection = jdbcConfig.establishDBConnection();
 
             String SQL = "SELECT COUNT(user_id) * 2.8 as discount " + "FROM `order` " + "WHERE user_id=?";

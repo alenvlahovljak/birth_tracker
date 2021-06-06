@@ -3,6 +3,7 @@ package com.bt.controllers;
 import com.bt.DAO.OrganizationDAO;
 import com.bt.bean.Organization;
 import com.bt.bean.Party;
+import com.bt.db.DBOrganization;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
@@ -10,22 +11,20 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class OrganizationController {
-    OrganizationDAO organizationDAO = new OrganizationDAO();
-
     public void getOrganizationsController(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        List<Organization> organizations = organizationDAO.getOrganizations();
+        DBOrganization dbOrganization = new DBOrganization(request);
 
-        request.setAttribute("organizations", organizations);
+        request.setAttribute("organizations", dbOrganization.executeGetter());
 
         RequestDispatcher rd = request.getRequestDispatcher("./views/organization/organizations.jsp");
         rd.forward(request, response);
     }
 
     public void getOrganizationController(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String id = request.getParameter("id");
-        Organization organization = organizationDAO.getOrganization(id);
+        DBOrganization dbOrganization = new DBOrganization(request);
 
-        request.setAttribute("organization", organization);
+        dbOrganization.setParams("id");
+        request.setAttribute("organization", dbOrganization.executeGetter("one"));
 
         RequestDispatcher rd = request.getRequestDispatcher("./views/organization.jsp");
         rd.forward(request, response);
@@ -37,45 +36,38 @@ public class OrganizationController {
     }
 
     public void createOrganizationController(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String name = request.getParameter("name");
-        String abbreviation = request.getParameter("abbreviation");
-        String description = request.getParameter("description");
-        String thumbnail = request.getParameter("thumbnail_url");
-        int managerId = Integer.parseInt(request.getParameter("manager_id"));
+        DBOrganization dbOrganization = new DBOrganization(request);
 
-        Organization organization = new Organization(name, abbreviation, description, thumbnail, managerId);
-        organizationDAO.createOrganization(organization);
+        dbOrganization.setParams("name", "abbreviation", "description", "thumbnail_url", "manager_id");
+        dbOrganization.executeSetter("create");
 
         response.sendRedirect(request.getContextPath() + "/OrganizationServlet?command=LIST");
     }
 
     public void editOrganizationController(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String id = request.getParameter("id");
-        Organization organization = organizationDAO.getOrganization(id);
+        DBOrganization dbOrganization = new DBOrganization(request);
 
-        request.setAttribute("organization", organization);
+        dbOrganization.setParams("id");
+        request.setAttribute("organization", dbOrganization.executeGetter("one"));
 
         RequestDispatcher rd = request.getRequestDispatcher("./views/edit-organization.jsp");
         rd.forward(request, response);
     }
 
     public void updateOrganizationController(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        int id = Integer.parseInt(request.getParameter("id"));
-        String name = request.getParameter("name");
-        String abbreviation = request.getParameter("abbreviation");
-        String description = request.getParameter("description");
-        String thumbnail = request.getParameter("thumbnail_url");
+        DBOrganization dbOrganization = new DBOrganization(request);
 
-        Organization organization = new Organization(id, name, abbreviation, description, thumbnail);
-        organizationDAO.updateOrganization(organization);
+        dbOrganization.setParams("id", "name", "abbreviation", "description", "thumbnail_url", "");
+        dbOrganization.executeSetter("update");
 
         response.sendRedirect(request.getContextPath() + "/OrganizationServlet?command=LIST");
     }
 
     public void deleteOrganizationController(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String id = request.getParameter("id");
+        DBOrganization dbOrganization = new DBOrganization(request);
 
-        organizationDAO.deleteOrganization(id);
+        dbOrganization.setParams("id");
+        dbOrganization.executeSetter("delete");
 
         response.sendRedirect(request.getContextPath() + "/OrganizationServlet?command=LIST");
     }

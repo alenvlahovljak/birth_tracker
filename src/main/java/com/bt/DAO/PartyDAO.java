@@ -70,17 +70,14 @@ public class PartyDAO {
         }
     }
 
-    public Party getParty(String partyId) throws Exception {
+    public Party getParty(int id) throws Exception {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
         Party party;
-        int id;
 
         try {
-            id = Integer.parseInt(partyId);
-
             connection = jdbcConfig.establishDBConnection();
 
             String SQL = "SELECT p.*, org.abbreviation as organization_abbreviation, o.user_id, o.id as order_id, o.rating, o.has_discount " + "FROM party as p " + "LEFT JOIN organization as org ON (p.organization_id = org.id) " + "LEFT JOIN `order` as o ON (p.id = o.party_id) " + "WHERE p.id =?";
@@ -174,14 +171,11 @@ public class PartyDAO {
         }
     }
 
-    public void deleteParty(String partyId) throws Exception {
+    public void deleteParty(int id) throws Exception {
         Connection connection = null;
         PreparedStatement statement = null;
 
-        int id;
-
         try {
-            id = Integer.parseInt(partyId);
 
             connection = jdbcConfig.establishDBConnection();
 

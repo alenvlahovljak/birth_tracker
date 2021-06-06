@@ -1,23 +1,23 @@
 package com.bt.controllers;
 
-import com.bt.DAO.PartyDAO;
 import com.bt.db.DBOrder;
+import com.bt.db.DBParty;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class OrderController {
-    PartyDAO partyDAO = new PartyDAO();
-
     public void createOrderController(HttpServletRequest request, HttpServletResponse response) throws Exception {
         DBOrder dbOrder = new DBOrder(request);
+        DBParty dbParty = new DBParty(request);
 
-        dbOrder.setParams("","user_id", "party_id", "", "");
+        dbOrder.setParams("", "user_id", "party_id", "", "");
         dbOrder.executeSetter("create");
 
-        partyDAO.updatePartyParticipants(dbOrder.getPartyId(), "+");
+        dbParty.setParams("party_id");
+        dbParty.executeSetter("update", "participants", "+");
 
-        response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LOAD&id=" + dbOrder.getPartyId());
+        response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LOAD&id=" + dbParty.getId());
     }
 
     public void updateOrderRatingController(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -40,12 +40,14 @@ public class OrderController {
 
     public void deleteOrderController(HttpServletRequest request, HttpServletResponse response) throws Exception {
         DBOrder dbOrder = new DBOrder(request);
+        DBParty dbParty = new DBParty(request);
 
         dbOrder.setParams("id", "party_id");
         dbOrder.executeSetter("delete");
 
-        partyDAO.updatePartyParticipants(dbOrder.getPartyId(), "-");
+        dbParty.setParams("party_id");
+        dbParty.executeSetter("update", "participants", "-");
 
-        response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LOAD&id=" + dbOrder.getPartyId());
+        response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LOAD&id=" + dbParty.getId());
     }
 }

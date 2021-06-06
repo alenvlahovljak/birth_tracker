@@ -30,6 +30,19 @@ public class DBOrder {
         this.discount = Boolean.parseBoolean(request.getParameter(discount));
     }
 
+    public float executeGetter(String quantity, String column) throws Exception {
+        OrderDAO orderDAO = new OrderDAO();
+
+        if (quantity.equals("one")) {
+            if (column.equals("column")) {
+                return orderDAO.getUserDiscount(this.userId);
+            }
+
+        }
+
+        return 0;
+    }
+
     public void executeSetter(String action) throws Exception {
         OrderDAO orderDAO = new OrderDAO();
 

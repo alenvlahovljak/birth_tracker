@@ -48,17 +48,14 @@ public class OrganizationDAO {
         }
     }
 
-    public Organization getOrganization(String organizationId) throws Exception {
+    public Organization getOrganization(int id) throws Exception {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
         Organization organization;
-        int id;
 
         try {
-            id = Integer.parseInt(organizationId);
-
             connection = jdbcConfig.establishDBConnection();
 
             String SQL = "select * from organization where id=?";
@@ -125,15 +122,11 @@ public class OrganizationDAO {
         }
     }
 
-    public void deleteOrganization(String organizationId) throws Exception {
+    public void deleteOrganization(int id) throws Exception {
         Connection connection = null;
         PreparedStatement statement = null;
 
-        int id;
-
         try {
-            id = Integer.parseInt(organizationId);
-
             connection = jdbcConfig.establishDBConnection();
 
             String SQL = "delete from organization where id=?";
