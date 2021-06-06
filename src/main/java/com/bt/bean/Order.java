@@ -7,25 +7,9 @@ public class Order {
     private float rating;
     private boolean hasDiscount;
 
-    public Order(int userId, int partyId, float rating) {
-        this.userId = userId;
-        this.partyId = partyId;
-        this.rating = rating;
-    }
-
-    public Order(int id, int userId, int partyId, float rating) {
-        this(userId, partyId, rating);
-        this.id = id;
-    }
-
     public Order(int userId, int partyId) {
         this.userId = userId;
         this.partyId = partyId;
-    }
-
-    public Order(int id, float rating) {
-        this.id = id;
-        this.rating = rating;
     }
 
     public Order(int id, int partyId, int rating) {
@@ -34,16 +18,16 @@ public class Order {
         this.rating = rating;
     }
 
+    public Order(int id, int partyId, boolean hasDiscount) {
+        this.id = id;
+        this.partyId = partyId;
+        this.hasDiscount = hasDiscount;
+    }
+
     public Order(int id, int userId, int partyId, int rating, boolean hasDiscount) {
         this(id, partyId, rating);
         this.userId = userId;
         this.hasDiscount = hasDiscount;
-    }
-
-    public Order(int id, int partyId, boolean hasDiscount) {
-        this.id=id;
-        this.partyId=partyId;
-        this.hasDiscount=hasDiscount;
     }
 
     public int getId() {
@@ -84,5 +68,16 @@ public class Order {
 
     public void setHasDiscount(boolean hasDiscount) {
         this.hasDiscount = hasDiscount;
+    }
+
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id=" + id +
+                ", userId=" + userId +
+                ", partyId=" + partyId +
+                ", rating=" + rating +
+                ", hasDiscount=" + hasDiscount +
+                '}';
     }
 }
