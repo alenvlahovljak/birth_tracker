@@ -13,7 +13,7 @@ public class UserController {
 
         request.setAttribute("users", dbUser.executeGetter());
 
-        RequestDispatcher rd = request.getRequestDispatcher("./views/users.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("./views/user/users.jsp");
         rd.forward(request, response);
     }
 
@@ -28,7 +28,7 @@ public class UserController {
     }
 
     public void addUserController(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        RequestDispatcher rd = request.getRequestDispatcher("./views/add-user.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("./views/user/add-user.jsp");
         rd.forward(request, response);
     }
 
@@ -47,7 +47,7 @@ public class UserController {
         dbUser.setParams("id");
         request.setAttribute("user", dbUser.executeGetter("one"));
 
-        RequestDispatcher rd = request.getRequestDispatcher("./views/edit-user.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("./views/user/edit-user.jsp");
         rd.forward(request, response);
     }
 
