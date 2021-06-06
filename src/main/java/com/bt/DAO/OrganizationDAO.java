@@ -48,6 +48,37 @@ public class OrganizationDAO {
         }
     }
 
+    public List<Organization> getManagerOrganizations(int id) {
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+
+        List<Organization> organizations = new ArrayList<>();
+
+        System.out.println("ID" + id);
+
+        try {
+            connection = jdbcConfig.establishDBConnection();
+
+            String SQL = "select * from organization where manager_id=?";
+            statement = connection.prepareStatement(SQL);
+            statement.setInt(1, id);
+
+            resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Organization organization = this.retrieveDBModel(resultSet);
+                organizations.add(organization);
+            }
+
+            return organizations;
+        } catch (Exception e) {
+            return null;
+        } finally {
+            jdbcConfig.closeDBConnection(connection, statement, resultSet);
+        }
+    }
+
     public Organization getOrganization(int id) throws Exception {
         Connection connection = null;
         PreparedStatement statement = null;

@@ -2,6 +2,7 @@ package com.bt.db;
 
 import com.bt.DAO.UserDAO;
 import com.bt.bean.User;
+import com.bt.utils.Helper;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -15,12 +16,14 @@ public class DBUser {
     private String lastName;
     private String avatar;
 
+    Helper helper = new Helper();
+
     public DBUser(HttpServletRequest request) {
         this.request = request;
     }
 
     public void setParams(String id) {
-        this.id = Integer.parseInt(request.getParameter(id));
+        this.id = helper.getInteger(request.getParameter(id));
     }
 
     public void setParams(String username, String firstName, String lastName, String avatar) {
@@ -32,7 +35,7 @@ public class DBUser {
 
     public void setParams(String id, String username, String firstName, String lastName, String avatar) {
         this.setParams(username, firstName, lastName, avatar);
-        this.id = Integer.parseInt(request.getParameter(id));
+        this.id = helper.getInteger(request.getParameter(id));
     }
 
     public List<User> executeGetter() throws Exception {

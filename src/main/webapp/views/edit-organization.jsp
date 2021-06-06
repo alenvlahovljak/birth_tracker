@@ -4,6 +4,10 @@
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%--                            To DO only list of organization where this manager is--%>
+<%--                            To DO when admin he can add any org--%>
+<%--        TO DO trim white space on all fileds--%>
+
 <!doctype html>
 <html lang="en">
 <head>

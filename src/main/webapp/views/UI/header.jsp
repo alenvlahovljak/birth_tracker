@@ -42,6 +42,7 @@
 
 <c:url var="addParty" value="PartyServlet">
     <c:param name="command" value="ADD"/>
+    <c:param name="manager_id" value="${client.role == 2 ? client.id : 0}"/>
 </c:url>
 <c:url var="partyListRoute" value="PartyServlet">
     <c:param name="command" value="LIST"/>

@@ -2,25 +2,25 @@ package com.bt.utils;
 
 public class Helper {
     public boolean getBoolean(String n) {
-        if (n != null) {
+        try {
             return Boolean.parseBoolean(n);
-        } else {
+        } catch (Exception e){
             return false;
         }
     }
 
     public int getInteger(String n) {
-        if (n != null) {
+        try {
             return Integer.parseInt(n);
-        } else {
+        } catch (Exception e){
             return 0;
         }
     }
 
     public float getFloat(String n) {
-        if (n != null) {
+        try {
             return Float.parseFloat(n);
-        } else {
+        } catch (Exception e) {
             return 0;
         }
     }

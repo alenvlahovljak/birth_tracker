@@ -13,6 +13,7 @@ public class Party implements Serializable {
     private float price;
     private int organizationId;
     private String organizationAbbreviation;
+    private int managerId;
     private int userId;
     private int orderId;
     private int rating;
@@ -94,9 +95,10 @@ public class Party implements Serializable {
         this.price = price;
     }
 
-    public Party(int id, String name, String description, String thumbnail, int participants, int maxParticipants, boolean hasFreeSpots, float price, int organizationId, String organizationAbbreviation, int userId, int orderId, int rating, boolean hasDiscount) {
+    public Party(int id, String name, String description, String thumbnail, int participants, int maxParticipants, boolean hasFreeSpots, float price, int organizationId, String organizationAbbreviation, int managerId, int userId, int orderId, int rating, boolean hasDiscount) {
         this(id, name, description, thumbnail, participants, maxParticipants, hasFreeSpots, price, organizationId, organizationAbbreviation, userId, orderId, rating);
         this.hasDiscount = hasDiscount;
+        this.managerId = managerId;
     }
 
     public int getId() {
@@ -137,6 +139,10 @@ public class Party implements Serializable {
 
     public String getOrganizationAbbreviation() {
         return organizationAbbreviation;
+    }
+
+    public int getManagerId() {
+        return managerId;
     }
 
     public int getUserId() {
@@ -195,6 +201,10 @@ public class Party implements Serializable {
         this.organizationAbbreviation = organizationAbbreviation;
     }
 
+    public void setManagerId(int managerId) {
+        this.managerId = managerId;
+    }
+
     public void setUserId(int userId) {
         this.userId = userId;
     }
@@ -224,6 +234,7 @@ public class Party implements Serializable {
                 ", price=" + price +
                 ", organizationId=" + organizationId +
                 ", organizationAbbreviation='" + organizationAbbreviation + '\'' +
+                ", managerId=" + managerId +
                 ", userId=" + userId +
                 ", orderId=" + orderId +
                 ", rating=" + rating +

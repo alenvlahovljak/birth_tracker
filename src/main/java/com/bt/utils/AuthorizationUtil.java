@@ -33,6 +33,10 @@ public class AuthorizationUtil {
         Manager manager;
         User user;
 
+        if (client == null) {
+            return false;
+        }
+
         if (role == 1) {
             try {
                 admin = (Admin) client;

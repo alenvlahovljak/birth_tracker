@@ -2,6 +2,7 @@ package com.bt.db;
 
 import com.bt.DAO.OrganizationDAO;
 import com.bt.bean.Organization;
+import com.bt.utils.Helper;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -17,12 +18,14 @@ public class DBOrganization {
     private float rating;
     private int managerId;
 
+    Helper helper = new Helper();
+
     public DBOrganization(HttpServletRequest request) {
         this.request = request;
     }
 
     public void setParams(String id) {
-        this.id = Integer.parseInt(request.getParameter(id));
+        this.id = helper.getInteger(request.getParameter(id));
     }
 
     public void setParams(String name, String abbreviation, String description, String thumbnail, String managerId) {
@@ -30,12 +33,12 @@ public class DBOrganization {
         this.abbreviation = request.getParameter(abbreviation);
         this.description = request.getParameter(description);
         this.thumbnail = request.getParameter(thumbnail);
-        this.managerId = Integer.parseInt(request.getParameter(managerId));
+        this.managerId = helper.getInteger(request.getParameter(managerId));
     }
 
     public void setParams(String id, String name, String abbreviation, String description, String thumbnail, String managerId) {
         this.setParams(name, abbreviation, description, thumbnail, managerId);
-        this.id = Integer.parseInt(request.getParameter(id));
+        this.id = helper.getInteger(request.getParameter(id));
     }
 
     public List<Organization> executeGetter() throws Exception {
@@ -49,6 +52,18 @@ public class DBOrganization {
 
         if (quantity.equals("one")) {
             return organizationDAO.getOrganization(this.id);
+        }
+
+        return null;
+    }
+
+    public List<Organization> executeGetter(String quantity, String column) throws Exception {
+        OrganizationDAO organizationDAO = new OrganizationDAO();
+
+        if (quantity.equals("one")) {
+            if (column.equals("manager_id")) {
+                return organizationDAO.getManagerOrganizations(this.managerId);
+            }
         }
 
         return null;

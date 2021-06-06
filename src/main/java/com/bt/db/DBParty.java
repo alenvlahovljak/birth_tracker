@@ -2,6 +2,7 @@ package com.bt.db;
 
 import com.bt.DAO.PartyDAO;
 import com.bt.bean.Party;
+import com.bt.utils.Helper;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -19,31 +20,34 @@ public class DBParty {
     private float price;
     private int organizationId;
     private String organizationAbbreviation;
+    private int managerId;
     private int userId;
     private int orderId;
     private int rating;
     private boolean hasDiscount;
+
+    Helper helper = new Helper();
 
     public DBParty(HttpServletRequest request) {
         this.request = request;
     }
 
     public void setParams(String id) {
-        this.id = Integer.parseInt(request.getParameter(id));
+        this.id = helper.getInteger(request.getParameter(id));
     }
 
     public void setParams(String name, String description, String thumbnail, String maxParticipants, String price, String organizationId) {
         this.name = request.getParameter(name);
         this.description = request.getParameter(description);
         this.thumbnail = request.getParameter(thumbnail);
-        this.maxParticipants = Integer.parseInt(request.getParameter(maxParticipants));
-        this.price = Float.parseFloat(request.getParameter(price));
-        this.organizationId = Integer.parseInt(request.getParameter(organizationId));
+        this.maxParticipants = helper.getInteger(request.getParameter(maxParticipants));
+        this.price = helper.getFloat(request.getParameter(price));
+        this.organizationId = helper.getInteger(request.getParameter(organizationId));
     }
 
     public void setParams(String id, String name, String description, String thumbnail, String maxParticipants, String price, String organizationId) {
         this.setParams(name, description, thumbnail, maxParticipants, price, organizationId);
-        this.id = Integer.parseInt(request.getParameter(id));
+        this.id = helper.getInteger(request.getParameter(id));
     }
 
     public List<Party> executeGetter() throws Exception {
@@ -69,7 +73,7 @@ public class DBParty {
             partyDAO.deleteParty(this.id);
         }
 
-        Party party = new Party(id, name, description, thumbnail, participants, maxParticipants, hasFreeSpots, price, organizationId, organizationAbbreviation, userId, orderId, rating, hasDiscount);
+        Party party = new Party(id, name, description, thumbnail, participants, maxParticipants, hasFreeSpots, price, organizationId, organizationAbbreviation, managerId,userId, orderId, rating, hasDiscount);
 
         if (action.equals("create")) {
             partyDAO.createParty(party);
@@ -128,6 +132,10 @@ public class DBParty {
         return organizationAbbreviation;
     }
 
+    public int getManagerId() {
+        return managerId;
+    }
+
     public int getUserId() {
         return userId;
     }
@@ -182,6 +190,10 @@ public class DBParty {
 
     public void setOrganizationAbbreviation(String organizationAbbreviation) {
         this.organizationAbbreviation = organizationAbbreviation;
+    }
+
+    public void setManagerId(int managerId) {
+        this.managerId = managerId;
     }
 
     public void setUserId(int userId) {
