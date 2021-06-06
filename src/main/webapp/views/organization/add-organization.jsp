@@ -1,9 +1,14 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%--State--%>
+<c:set var="client" value="${sessionScope.client}" scope="page"/>
+<%--State--%>
+
 <%--Links--%>
 <c:url var="organizationListRoute" value="OrganizationServlet">
     <c:param name="command" value="LIST"/>
+    <c:param name="manager_id" value="${client.role == 2 ? client.id : 0}"/>
 </c:url>
 <%--Links--%>
 

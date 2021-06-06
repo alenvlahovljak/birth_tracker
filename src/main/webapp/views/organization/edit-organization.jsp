@@ -8,6 +8,7 @@
 <%--Links--%>
 <c:url var="organizationListRoute" value="OrganizationServlet">
     <c:param name="command" value="LIST"/>
+    <c:param name="manager_id" value="${organization.managerId}"/>
 </c:url>
 <%--Links--%>
 

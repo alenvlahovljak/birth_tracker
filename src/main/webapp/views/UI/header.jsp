@@ -31,6 +31,7 @@
 </c:url>
 <c:url var="organizationListRoute" value="OrganizationServlet">
     <c:param name="command" value="LIST"/>
+    <c:param name="manager_id" value="${client.role == 2 ? client.id : 0}"/>
 </c:url>
 
 <c:url var="addUser" value="UserServlet">
@@ -93,7 +94,6 @@
                         <c:if test="${client.role == 1}">
                             <li><a href="${addManager}" class="text-white">Add Manager</a></li>
                             <li><a href="${addUser}" class="text-white">Add User</a></li>
-                            <li><a href="${addOrganization}" class="text-white">Add Organization</a></li>
                             <li><a href="${addParty}" class="text-white">Add Party</a></li>
                         </c:if>
                         <c:if test="${client.role == 2}">

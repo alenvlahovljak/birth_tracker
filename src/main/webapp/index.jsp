@@ -37,6 +37,7 @@
                         <c:url var="organizationRoute" value="OrganizationServlet">
                             <c:param name="command" value="LOAD"/>
                             <c:param name="id" value="${party.organizationId}"/>
+                            <c:param name="manager_id" value="${party.managerId}"/>
                         </c:url>
                         <%--Links--%>
                         <div class="col">
