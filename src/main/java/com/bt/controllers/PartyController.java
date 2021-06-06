@@ -47,7 +47,7 @@ public class PartyController {
             request.setAttribute("discount", dbOrder.executeGetter("one", "discount"));
         }
 
-        RequestDispatcher rd = request.getRequestDispatcher("./views/party.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("./views/party/party.jsp");
         rd.forward(request, response);
     }
 
