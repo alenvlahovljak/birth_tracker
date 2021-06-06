@@ -10,7 +10,7 @@ public class AdminDAO {
 
     public Admin retrieveDBModel(ResultSet resultSet) throws SQLException {
         int id = resultSet.getInt("id");
-        int role = Integer.parseInt(resultSet.getString("role"));
+        String role = resultSet.getString("role");
         String username = resultSet.getString("username");
         String password = resultSet.getString("password");
 

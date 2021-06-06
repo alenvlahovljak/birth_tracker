@@ -2,6 +2,7 @@ package com.bt.db;
 
 import com.bt.DAO.OrderDAO;
 import com.bt.bean.Order;
+import com.bt.utils.Helper;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,20 +15,22 @@ public class DBOrder {
     private float rating;
     private boolean discount;
 
+    Helper helper = new Helper();
+
     public DBOrder(HttpServletRequest request) {
         this.request = request;
     }
 
     public void setParams(String id, String partyId) {
-        this.id = Integer.parseInt(request.getParameter(id));
-        this.partyId = Integer.parseInt(request.getParameter(partyId));
+        this.id = helper.getInteger(request.getParameter(id));
+        this.partyId = helper.getInteger(request.getParameter(partyId));
     }
 
     public void setParams(String id, String userId, String partyId, String rating, String discount) {
         this.setParams(id, partyId);
-        this.userId = Integer.parseInt(request.getParameter(userId));
-        this.rating = Float.parseFloat(request.getParameter(rating));
-        this.discount = Boolean.parseBoolean(request.getParameter(discount));
+        this.userId = helper.getInteger(request.getParameter(userId));
+        this.rating = helper.getFloat(request.getParameter(rating));
+        this.discount = helper.getBoolean(request.getParameter(discount));
     }
 
     public float executeGetter(String quantity, String column) throws Exception {

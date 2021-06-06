@@ -4,11 +4,11 @@ import java.io.Serializable;
 
 public class Admin implements Serializable {
     private int id;
-    private int role;
+    private String role;
     private String username;
     private String password;
 
-    public Admin(int id, int role, String username, String password) {
+    public Admin(int id, String role, String username, String password) {
         this.id = id;
         this.role = role;
         this.username = username;
@@ -19,7 +19,7 @@ public class Admin implements Serializable {
         return id;
     }
 
-    public int getRole() {
+    public String getRole() {
         return role;
     }
 
@@ -35,7 +35,7 @@ public class Admin implements Serializable {
         this.id = id;
     }
 
-    public void setRole(int role) {
+    public void setRole(String role) {
         this.role = role;
     }
 

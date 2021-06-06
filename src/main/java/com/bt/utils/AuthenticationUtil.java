@@ -12,12 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 public class AuthenticationUtil {
+    HttpSession session;
+    Object client;
+
     AdminDAO adminDAO = new AdminDAO();
     ManagerDAO managerDAO = new ManagerDAO();
     UserDAO userDAO = new UserDAO();
 
     public void authenticateAdmin(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession();
+        session = request.getSession();
 
         String username = request.getParameter("username").trim();
         String password = request.getParameter("password").trim();
@@ -38,7 +41,7 @@ public class AuthenticationUtil {
     }
 
     public void authenticateManager(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession();
+        session = request.getSession();
 
         String username = request.getParameter("username").trim();
         String password = request.getParameter("password").trim();
@@ -59,7 +62,7 @@ public class AuthenticationUtil {
     }
 
     public void authenticateUser(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession();
+        session = request.getSession();
 
         String username = request.getParameter("username").trim();
         String password = request.getParameter("password").trim();
@@ -80,9 +83,13 @@ public class AuthenticationUtil {
     }
 
     public void destroyClientSession(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        HttpSession session = request.getSession();
+        session = request.getSession();
+        client = session.getAttribute("client");
 
-        session.setAttribute("client", null);
+        if (client != null) {
+            session.setAttribute("client", null);
+        }
+
         response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LIST");
     }
 }

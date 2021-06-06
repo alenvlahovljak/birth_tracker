@@ -53,7 +53,7 @@ public class OrganizationController {
     public void updateOrganizationController(HttpServletRequest request, HttpServletResponse response) throws Exception {
         DBOrganization dbOrganization = new DBOrganization(request);
 
-        dbOrganization.setParams("id", "name", "abbreviation", "description", "thumbnail_url", "");
+        dbOrganization.setParams("id", "name", "abbreviation", "description", "thumbnail_url", "manager_id");
         dbOrganization.executeSetter("update");
 
         response.sendRedirect(request.getContextPath() + "/OrganizationServlet?command=LIST");
