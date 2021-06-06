@@ -4,7 +4,7 @@
 <%--State--%>
 <c:set var="client" value="${sessionScope.client}" scope="page"/>
 <c:set var="parties" value="${requestScope.parties}" scope="page"/>
-<%--state--%>
+<%--State--%>
 
 <!doctype html>
 <html lang="en">
