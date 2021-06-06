@@ -78,7 +78,7 @@ public class PartyController {
             request.setAttribute("organizations", dbOrganization.executeGetter("one", "manager_id"));
         }
 
-        RequestDispatcher rd = request.getRequestDispatcher("./views/add-party.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("./views/party/add-party.jsp");
         rd.forward(request, response);
     }
 

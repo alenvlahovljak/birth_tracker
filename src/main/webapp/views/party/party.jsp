@@ -15,7 +15,6 @@
 <%--Links--%>
 <c:url var="partyListRoute" value="PartyServlet">
     <c:param name="command" value="LIST"/>
-    <c:param name="id" value="${party.id}"/>
 </c:url>
 
 <c:url var="editPartyRoute" value="PartyServlet">

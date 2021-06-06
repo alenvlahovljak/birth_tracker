@@ -18,7 +18,7 @@
     <jsp:include page="../UI/jumbotron.jsp">
         <jsp:param name="title" value="Here's a list of organizations!"/>
         <jsp:param name="info" value="Satisfied with a party? Give it a rating then."/>
-        <jsp:param name="action" value="organizations"/>
+        <jsp:param name="action" value="#organizations"/>
         <jsp:param name="link" value="Show me organizations!"/>
     </jsp:include>
     <div id="organizations" class="album py-5 bg-light">
