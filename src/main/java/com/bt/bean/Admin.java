@@ -1,6 +1,6 @@
 package com.bt.bean;
 
-public class Admin {
+public class Admin{
     private int id;
     private int role;
     private String username;
