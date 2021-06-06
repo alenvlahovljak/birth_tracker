@@ -55,8 +55,6 @@ public class OrganizationDAO {
 
         List<Organization> organizations = new ArrayList<>();
 
-        System.out.println("ID" + id);
-
         try {
             connection = jdbcConfig.establishDBConnection();
 

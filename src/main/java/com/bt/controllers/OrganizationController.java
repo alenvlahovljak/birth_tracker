@@ -19,6 +19,7 @@ public class OrganizationController {
         }
 
         DBOrganization dbOrganization = new DBOrganization(request);
+        dbOrganization.setParams("", "", "", "", "manager_id");
 
         if (authorizationUtil.hasRole(1)) {
             request.setAttribute("organizations", dbOrganization.executeGetter());
@@ -73,7 +74,7 @@ public class OrganizationController {
         dbOrganization.setParams("name", "abbreviation", "description", "thumbnail_url", "manager_id");
         dbOrganization.executeSetter("create");
 
-        response.sendRedirect(request.getContextPath() + "/OrganizationServlet?command=LIST?manager_id=" + dbOrganization.getManagerId());
+        response.sendRedirect(request.getContextPath() + "/OrganizationServlet?command=LIST&manager_id=" + dbOrganization.getManagerId());
     }
 
     public void editOrganizationController(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -92,15 +93,22 @@ public class OrganizationController {
         dbOrganization.setParams("id", "name", "abbreviation", "description", "thumbnail_url", "manager_id");
         dbOrganization.executeSetter("update");
 
-        response.sendRedirect(request.getContextPath() + "/OrganizationServlet?command=LIST?manager_id=" + dbOrganization.getManagerId());
+        response.sendRedirect(request.getContextPath() + "/OrganizationServlet?command=LIST&manager_id=" + dbOrganization.getManagerId());
     }
 
     public void deleteOrganizationController(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        authorizationUtil = new AuthorizationUtil(request, response);
+
+        if (authorizationUtil.hasRole(2) || authorizationUtil.hasRole(3)) {
+            response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LIST");
+            return;
+        }
+
         DBOrganization dbOrganization = new DBOrganization(request);
 
         dbOrganization.setParams("id");
         dbOrganization.executeSetter("delete");
 
-        response.sendRedirect(request.getContextPath() + "/OrganizationServlet?command=LIST?manager_id=" + dbOrganization.getManagerId());
+        response.sendRedirect(request.getContextPath() + "/OrganizationServlet?command=LIST&manager_id=" + dbOrganization.getManagerId());
     }
 }

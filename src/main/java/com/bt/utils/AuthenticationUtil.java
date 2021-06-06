@@ -55,7 +55,7 @@ public class AuthenticationUtil {
         assert manager != null;
         if (username.equals(manager.getUsername()) && password.equals(manager.getPassword())) {
             session.setAttribute("client", manager);
-            response.sendRedirect(request.getContextPath() + "/OrganizationServlet?command=LIST?manager_id=" + manager.getId());
+            response.sendRedirect(request.getContextPath() + "/OrganizationServlet?command=LIST&manager_id=" + manager.getId());
         } else {
             response.sendRedirect(request.getContextPath() + "/AuthServlet?role=manager");
         }

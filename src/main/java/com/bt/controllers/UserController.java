@@ -2,13 +2,23 @@ package com.bt.controllers;
 
 import com.bt.db.DBManager;
 import com.bt.db.DBUser;
+import com.bt.utils.AuthorizationUtil;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class UserController {
+    AuthorizationUtil authorizationUtil;
+
     public void getUsersController(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        authorizationUtil = new AuthorizationUtil(request, response);
+
+        if (authorizationUtil.hasRole(2) || authorizationUtil.hasRole(3)) {
+            response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LIST");
+            return;
+        }
+
         DBUser dbUser = new DBUser(request);
 
         request.setAttribute("users", dbUser.executeGetter());
@@ -18,6 +28,13 @@ public class UserController {
     }
 
     public void getUserController(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        authorizationUtil = new AuthorizationUtil(request, response);
+
+        if (authorizationUtil.hasRole(2) || authorizationUtil.hasRole(3)) {
+            response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LIST");
+            return;
+        }
+
         DBManager dbManager = new DBManager(request);
 
         dbManager.setParams("id");
@@ -28,11 +45,25 @@ public class UserController {
     }
 
     public void addUserController(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        authorizationUtil = new AuthorizationUtil(request, response);
+
+        if (authorizationUtil.hasRole(2) || authorizationUtil.hasRole(3)) {
+            response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LIST");
+            return;
+        }
+
         RequestDispatcher rd = request.getRequestDispatcher("./views/user/add-user.jsp");
         rd.forward(request, response);
     }
 
     public void createUserController(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        authorizationUtil = new AuthorizationUtil(request, response);
+
+        if (authorizationUtil.hasRole(2) || authorizationUtil.hasRole(3)) {
+            response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LIST");
+            return;
+        }
+
         DBUser dbUser = new DBUser(request);
 
         dbUser.setParams("username", "first_name", "last_name", "avatar_url");
@@ -42,6 +73,13 @@ public class UserController {
     }
 
     public void editUserController(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        authorizationUtil = new AuthorizationUtil(request, response);
+
+        if (authorizationUtil.hasRole(2) || authorizationUtil.hasRole(3)) {
+            response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LIST");
+            return;
+        }
+
         DBUser dbUser = new DBUser(request);
 
         dbUser.setParams("id");
@@ -52,6 +90,13 @@ public class UserController {
     }
 
     public void updateUserController(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        authorizationUtil = new AuthorizationUtil(request, response);
+
+        if (authorizationUtil.hasRole(2) || authorizationUtil.hasRole(3)) {
+            response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LIST");
+            return;
+        }
+
         DBUser dbUser = new DBUser(request);
 
         dbUser.setParams("id", "username", "first_name", "last_name", "avatar_url");
@@ -61,6 +106,13 @@ public class UserController {
     }
 
     public void deleteUserController(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        authorizationUtil = new AuthorizationUtil(request, response);
+
+        if (authorizationUtil.hasRole(2) || authorizationUtil.hasRole(3)) {
+            response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LIST");
+            return;
+        }
+
         DBUser dbUser = new DBUser(request);
 
         dbUser.setParams("id");
