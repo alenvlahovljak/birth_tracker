@@ -1,6 +1,8 @@
 package com.bt.bean;
 
-public class Manager {
+import java.io.Serializable;
+
+public class Manager implements Serializable {
     private int id;
     private String role;
     private String username;

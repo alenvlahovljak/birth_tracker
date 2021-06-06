@@ -1,6 +1,8 @@
 package com.bt.bean;
 
-public class Admin {
+import java.io.Serializable;
+
+public class Admin implements Serializable {
     private int id;
     private int role;
     private String username;

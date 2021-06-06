@@ -1,6 +1,8 @@
 package com.bt.bean;
 
-public class Party {
+import java.io.Serializable;
+
+public class Party implements Serializable {
     private int id;
     private String name;
     private String description;

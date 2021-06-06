@@ -1,6 +1,8 @@
 package com.bt.bean;
 
-public class Order {
+import java.io.Serializable;
+
+public class Order implements Serializable {
     private int id;
     private int userId;
     private int partyId;
