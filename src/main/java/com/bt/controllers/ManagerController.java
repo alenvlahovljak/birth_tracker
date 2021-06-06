@@ -1,30 +1,26 @@
 package com.bt.controllers;
 
-import com.bt.DAO.ManagerDAO;
-import com.bt.bean.Manager;
+import com.bt.db.DBManager;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 public class ManagerController {
-    ManagerDAO managerDAO = new ManagerDAO();
-
     public void getManagersController(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        List<Manager> managers = managerDAO.getManagers();
+        DBManager dbManager = new DBManager(request);
 
-        request.setAttribute("managers", managers);
+        request.setAttribute("managers", dbManager.executeGetter());
 
         RequestDispatcher rd = request.getRequestDispatcher("./views/managers.jsp");
         rd.forward(request, response);
     }
 
     public void getManagerController(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String id = request.getParameter("id");
-        Manager manager = managerDAO.getManager(id);
+        DBManager dbManager = new DBManager(request);
 
-        request.setAttribute("manager", manager);
+        dbManager.setParams("id");
+        request.setAttribute("manager", dbManager.executeGetter("one"));
 
         RequestDispatcher rd = request.getRequestDispatcher("./views/manager.jsp");
         rd.forward(request, response);
@@ -36,44 +32,38 @@ public class ManagerController {
     }
 
     public void createManagerController(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String username = request.getParameter("username");
-        String firstName = request.getParameter("first_name");
-        String lastName = request.getParameter("last_name");
-        String avatar = request.getParameter("avatar_url");
+        DBManager dbManager = new DBManager(request);
 
-        Manager manager = new Manager(username, firstName, lastName, avatar);
-        managerDAO.createManager(manager);
+        dbManager.setParams("username", "first_name", "last_name", "avatar_url");
+        dbManager.executeSetter("create");
 
         response.sendRedirect(request.getContextPath() + "/ManagerServlet?command=LIST");
     }
 
     public void editManagerController(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String id = request.getParameter("id");
-        Manager manager = managerDAO.getManager(id);
+        DBManager dbManager = new DBManager(request);
 
-        request.setAttribute("manager", manager);
+        dbManager.setParams("id");
+        request.setAttribute("manager", dbManager.executeGetter("one"));
 
         RequestDispatcher rd = request.getRequestDispatcher("./views/edit-manager.jsp");
         rd.forward(request, response);
     }
 
     public void updateManagerController(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        int id = Integer.parseInt(request.getParameter("id"));
-        String username = request.getParameter("username");
-        String firstName = request.getParameter("first_name");
-        String lastName = request.getParameter("last_name");
-        String avatar = request.getParameter("avatar_url");
+        DBManager dbManager = new DBManager(request);
 
-        Manager manager = new Manager(id, username, firstName, lastName, avatar);
-        managerDAO.updateManager(manager);
+        dbManager.setParams("id", "username", "first_name", "last_name", "avatar_url");
+        dbManager.executeSetter("update");
 
         response.sendRedirect(request.getContextPath() + "/ManagerServlet?command=LIST");
     }
 
     public void deleteManagerController(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String id = request.getParameter("id");
+        DBManager dbManager = new DBManager(request);
 
-        managerDAO.deleteManager(id);
+        dbManager.setParams("id");
+        dbManager.executeSetter("delete");
 
         response.sendRedirect(request.getContextPath() + "/ManagerServlet?command=LIST");
     }

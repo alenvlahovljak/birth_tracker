@@ -60,17 +60,14 @@ public class ManagerDAO {
     }
 
 
-    public Manager getManager(String managerId) throws Exception {
+    public Manager getManager(int id) throws Exception {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
         Manager manager;
-        int id;
 
         try {
-            id = Integer.parseInt(managerId);
-
             connection = jdbcConfig.establishDBConnection();
 
             String SQL = "select * from manager where id=?";
@@ -163,15 +160,11 @@ public class ManagerDAO {
         }
     }
 
-    public void deleteManager(String managerId) throws Exception {
+    public void deleteManager(int id) throws Exception {
         Connection connection = null;
         PreparedStatement statement = null;
 
-        int id;
-
         try {
-            id = Integer.parseInt(managerId);
-
             connection = jdbcConfig.establishDBConnection();
 
             String SQL = "delete from manager where id=?";
