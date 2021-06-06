@@ -4,9 +4,20 @@ public class Manager {
     private int id;
     private String role;
     private String username;
+    private String password;
     private String firstName;
     private String lastName;
     private String avatar;
+
+    public Manager(int id, String role, String username, String password, String firstName, String lastName, String avatar) {
+        this.id = id;
+        this.role = role;
+        this.username = username;
+        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.avatar = avatar;
+    }
 
     public Manager(String role, String username, String firstName, String lastName, String avatar) {
         this.role = role;
@@ -15,6 +26,7 @@ public class Manager {
         this.lastName = lastName;
         this.avatar = avatar;
     }
+
 
     public Manager(int id, String role, String username, String firstName, String lastName, String avatar) {
         this(role, username, firstName, lastName, avatar);
@@ -48,6 +60,10 @@ public class Manager {
         return username;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public String getFirstName() {
         return firstName;
     }
@@ -70,6 +86,10 @@ public class Manager {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public void setFirstName(String firstName) {

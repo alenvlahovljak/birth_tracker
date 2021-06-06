@@ -1,7 +1,7 @@
 package com.bt.servlets;
 
 import com.bt.controllers.AuthController;
-import com.bt.controllers.PartyController;
+import com.bt.controllers.ManagerController;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -22,13 +22,13 @@ public class AuthServlet extends HttpServlet {
 
             switch (role) {
                 case "admin":
-                    authController.getAdminAuthController(request, response);
+                    authController.adminController(request, response);
                     break;
                 case "manager":
-                    authController.getManagerAuthController(request, response);
+                    authController.managerController(request, response);
                     break;
                 default:
-                    authController.getUserAuthController(request, response);
+                    authController.userController(request, response);
             }
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -39,21 +39,21 @@ public class AuthServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
             AuthController authController = new AuthController();
-            String role = request.getParameter("role");
+            String command = request.getParameter("role");
 
-            if (role == null) {
-                role = "user";
+            if (command == null) {
+                command = "user";
             }
 
-            switch (role) {
+            switch (command) {
                 case "admin":
-                    authController.getAdminAuthController(request, response);
+                    authController.authenticateAdminController(request, response);
                     break;
                 case "manager":
-                    authController.getManagerAuthController(request, response);
+                    authController.authenticateManagerController(request, response);
                     break;
                 default:
-                    authController.setUserAuthController(request, response);
+                    authController.authenticateUserController(request, response);
             }
         } catch (Exception exception) {
             exception.printStackTrace();

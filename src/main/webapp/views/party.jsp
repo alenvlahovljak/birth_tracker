@@ -56,6 +56,24 @@
             </a>
         </header>
 
+        <c:url var="editParty" value="PartyServlet">
+            <c:param name="command" value="EDIT"/>
+            <c:param name="id" value="${requestScope.party.id}"/>
+        </c:url>
+        <c:url var="deleteParty" value="PartyServlet">
+            <c:param name="command" value="DELETE"/>
+            <c:param name="id" value="${requestScope.party.id}"/>
+        </c:url>
+
+        <%--                            To DO only list of organization where this manager is--%>
+        <%--                            To DO when admin he can add any org--%>
+<%--        TO DO trim white space on all fileds--%>
+
+        <div class="d-grid gap-2 d-md-flex justify-content-md-end mb-5">
+            <a class="btn btn-warning me-md-2" href="${editParty}">Edit</a>
+            <a class="btn btn-danger" href="${deleteParty}">Delete</a>
+        </div>
+
         <div class="p-5 mb-4 bg-light rounded-3 background">
             <div class="container-fluid py-5 info">
                 <h1 class="display-5 fw-bold">${requestScope.party.name}</h1>
