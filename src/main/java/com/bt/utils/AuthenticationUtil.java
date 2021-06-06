@@ -78,4 +78,11 @@ public class AuthenticationUtil {
             response.sendRedirect(request.getContextPath() + "/AuthServlet?role=user");
         }
     }
+
+    public void destroyClientSession(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        HttpSession session = request.getSession();
+
+        session.setAttribute("client", null);
+        response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LIST");
+    }
 }

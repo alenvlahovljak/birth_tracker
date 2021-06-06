@@ -16,7 +16,7 @@
     <c:param name="role" value="user"/>
 </c:url>
 <c:url var="logOutRoute" value="AuthServlet">
-    <c:param name="command" value="LOGOUT"/>
+    <c:param name="role" value="destroy"/>
 </c:url>
 
 <c:url var="addManager" value="ManagerServlet">

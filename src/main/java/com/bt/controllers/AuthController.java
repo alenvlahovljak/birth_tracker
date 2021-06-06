@@ -35,4 +35,8 @@ public class AuthController {
     public void authenticateUserController(HttpServletRequest request, HttpServletResponse response) throws Exception {
         authenticationUtil.authenticateUser(request, response);
     }
+
+    public void destroyClientSessionController(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        authenticationUtil.destroyClientSession(request, response);
+    }
 }
