@@ -166,15 +166,11 @@ public class OrderDAO {
         }
     }
 
-    public void deleteOrder(String partyId) throws Exception {
+    public void deleteOrder(int id) throws Exception {
         Connection connection = null;
         PreparedStatement statement = null;
 
-        int id;
-
         try {
-            id = Integer.parseInt(partyId);
-
             connection = jdbcConfig.establishDBConnection();
 
             String SQL = "delete from `order` where id=?";

@@ -1,56 +1,51 @@
 package com.bt.controllers;
 
-import com.bt.DAO.OrderDAO;
 import com.bt.DAO.PartyDAO;
-import com.bt.bean.Order;
+import com.bt.db.DBOrder;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class OrderController {
-    OrderDAO orderDAO = new OrderDAO();
     PartyDAO partyDAO = new PartyDAO();
 
     public void createOrderController(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        int userId = Integer.parseInt(request.getParameter("user_id"));
-        int partyId = Integer.parseInt(request.getParameter("party_id"));
+        DBOrder dbOrder = new DBOrder(request);
 
-        Order order = new Order(userId, partyId);
-        orderDAO.createOrder(order);
-        partyDAO.updatePartyParticipants(partyId, "+");
+        dbOrder.setParams("","user_id", "party_id", "", "");
+        dbOrder.executeSetter("create");
 
-        response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LOAD&id=" + partyId);
+        partyDAO.updatePartyParticipants(dbOrder.getPartyId(), "+");
+
+        response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LOAD&id=" + dbOrder.getPartyId());
     }
 
     public void updateOrderRatingController(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        int id = Integer.parseInt(request.getParameter("id"));
-        int partyId = Integer.parseInt(request.getParameter("party_id"));
-        int rating = Integer.parseInt(request.getParameter("rating"));
+        DBOrder dbOrder = new DBOrder(request);
 
-        Order order = new Order(id, partyId, rating);
-        orderDAO.updateOrderRating(order);
+        dbOrder.setParams("id", "", "party_id", "rating", "");
+        dbOrder.executeSetter("update", "rating");
 
-        response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LOAD&id=" + partyId);
+        response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LOAD&id=" + dbOrder.getPartyId());
     }
 
     public void updateOrderDiscountController(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        int id = Integer.parseInt(request.getParameter("id"));
-        int partyId = Integer.parseInt(request.getParameter("party_id"));
-        boolean hasDiscount = Boolean.parseBoolean(request.getParameter("discount"));
+        DBOrder dbOrder = new DBOrder(request);
 
-        Order order = new Order(id, partyId, hasDiscount);
-        orderDAO.updateOrderDiscount(order);
+        dbOrder.setParams("id", "", "party_id", "", "discount");
+        dbOrder.executeSetter("update", "discount");
 
-        response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LOAD&id=" + partyId);
+        response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LOAD&id=" + dbOrder.getPartyId());
     }
 
     public void deleteOrderController(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String id = request.getParameter("id");
-        int partyId = Integer.parseInt(request.getParameter("party_id"));
+        DBOrder dbOrder = new DBOrder(request);
 
-        orderDAO.deleteOrder(id);
-        partyDAO.updatePartyParticipants(partyId, "-");
+        dbOrder.setParams("id", "party_id");
+        dbOrder.executeSetter("delete");
 
-        response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LOAD&id=" + partyId);
+        partyDAO.updatePartyParticipants(dbOrder.getPartyId(), "-");
+
+        response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LOAD&id=" + dbOrder.getPartyId());
     }
 }

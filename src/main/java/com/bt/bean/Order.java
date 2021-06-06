@@ -14,7 +14,7 @@ public class Order implements Serializable {
         this.partyId = partyId;
     }
 
-    public Order(int id, int partyId, int rating) {
+    public Order(int id, int partyId, float rating) {
         this.id = id;
         this.partyId = partyId;
         this.rating = rating;
@@ -26,7 +26,7 @@ public class Order implements Serializable {
         this.hasDiscount = hasDiscount;
     }
 
-    public Order(int id, int userId, int partyId, int rating, boolean hasDiscount) {
+    public Order(int id, int userId, int partyId, float rating, boolean hasDiscount) {
         this(id, partyId, rating);
         this.userId = userId;
         this.hasDiscount = hasDiscount;

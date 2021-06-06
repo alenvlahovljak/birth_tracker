@@ -9,11 +9,11 @@ import java.util.List;
 public class DBManager {
     HttpServletRequest request;
 
-    int id;
-    String username;
-    String firstName;
-    String lastName;
-    String avatar;
+    private int id;
+    private String username;
+    private String firstName;
+    private String lastName;
+    private String avatar;
 
     public DBManager(HttpServletRequest request) {
         this.request = request;
