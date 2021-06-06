@@ -22,12 +22,12 @@ public class OrganizationController {
         dbOrganization.setParams("id");
         request.setAttribute("organization", dbOrganization.executeGetter("one"));
 
-        RequestDispatcher rd = request.getRequestDispatcher("./views/organization.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("./views/organization/organization.jsp");
         rd.forward(request, response);
     }
 
     public void addOrganizationController(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        RequestDispatcher rd = request.getRequestDispatcher("./views/add-organization.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("./views/organization/add-organization.jsp");
         rd.forward(request, response);
     }
 
@@ -46,7 +46,7 @@ public class OrganizationController {
         dbOrganization.setParams("id");
         request.setAttribute("organization", dbOrganization.executeGetter("one"));
 
-        RequestDispatcher rd = request.getRequestDispatcher("./views/edit-organization.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("./views/organization/edit-organization.jsp");
         rd.forward(request, response);
     }
 

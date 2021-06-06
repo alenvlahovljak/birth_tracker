@@ -48,6 +48,17 @@
     <title><c:out value="${party.name}"/> | Party</title>
     <%--Custom CSS--%>
     <link href="../../resources/style/party.css" rel="stylesheet"/>
+    <style>
+        .background {
+            background: url("${party.thumbnail}");
+        }
+
+        .info {
+            background-color: rgba(12, 12, 12, 0.6);
+            color: white;
+
+        }
+    </style>
 </head>
 <body>
 <jsp:include page="../UI/header.jsp"/>
