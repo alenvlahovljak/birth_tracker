@@ -1,0 +1,2 @@
+INSERT INTO birthday_celebration_db.admin (id, role, username, password) VALUES (2, 1, 'admin', 'admin');
+INSERT INTO birthday_celebration_db.admin (id, role, username, password) VALUES (3, 1, 'alen', 'alen');

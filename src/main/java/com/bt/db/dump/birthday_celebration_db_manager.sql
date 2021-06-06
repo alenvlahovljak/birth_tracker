@@ -1,0 +1,4 @@
+INSERT INTO birthday_celebration_db.manager (id, role, username, password, first_name, last_name, avatar_url) VALUES (12, 2, 'manager', 'man', 'John', 'Smith', '');
+INSERT INTO birthday_celebration_db.manager (id, role, username, password, first_name, last_name, avatar_url) VALUES (13, 2, 'demo', 'demo', 'Adam', 'Smith', 'https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80');
+INSERT INTO birthday_celebration_db.manager (id, role, username, password, first_name, last_name, avatar_url) VALUES (14, 2, 'newmanager', 'newmanager', 'Joana', 'Pearson', '');
+INSERT INTO birthday_celebration_db.manager (id, role, username, password, first_name, last_name, avatar_url) VALUES (15, 2, 'newman', 'newman', 'Anna', 'Bostian', '');
