@@ -1,14 +1,10 @@
 package com.bt.controllers;
 
-import com.bt.DAO.OrganizationDAO;
-import com.bt.bean.Organization;
-import com.bt.bean.Party;
 import com.bt.db.DBOrganization;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 public class OrganizationController {
     public void getOrganizationsController(HttpServletRequest request, HttpServletResponse response) throws Exception {

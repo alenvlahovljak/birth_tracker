@@ -1,30 +1,27 @@
 package com.bt.controllers;
 
-import com.bt.DAO.UserDAO;
-import com.bt.bean.User;
+import com.bt.db.DBManager;
+import com.bt.db.DBUser;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 public class UserController {
-    UserDAO userDAO = new UserDAO();
-
     public void getUsersController(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        List<User> users = userDAO.getUsers();
+        DBUser dbUser = new DBUser(request);
 
-        request.setAttribute("users", users);
+        request.setAttribute("users", dbUser.executeGetter());
 
         RequestDispatcher rd = request.getRequestDispatcher("./views/users.jsp");
         rd.forward(request, response);
     }
 
     public void getUserController(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String id = request.getParameter("id");
-        User user = userDAO.getUser(id);
+        DBManager dbManager = new DBManager(request);
 
-        request.setAttribute("user", user);
+        dbManager.setParams("id");
+        request.setAttribute("user", dbManager.executeGetter("one"));
 
         RequestDispatcher rd = request.getRequestDispatcher("./views/user.jsp");
         rd.forward(request, response);
@@ -36,44 +33,38 @@ public class UserController {
     }
 
     public void createUserController(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String username = request.getParameter("username");
-        String firstName = request.getParameter("first_name");
-        String lastName = request.getParameter("last_name");
-        String avatar = request.getParameter("avatar_url");
+        DBUser dbUser = new DBUser(request);
 
-        User user = new User(username, firstName, lastName, avatar);
-        userDAO.createUser(user);
+        dbUser.setParams("username", "first_name", "last_name", "avatar_url");
+        dbUser.executeSetter("create");
 
         response.sendRedirect(request.getContextPath() + "/UserServlet?command=LIST");
     }
 
     public void editUserController(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String id = request.getParameter("id");
-        User user = userDAO.getUser(id);
+        DBUser dbUser = new DBUser(request);
 
-        request.setAttribute("user", user);
+        dbUser.setParams("id");
+        request.setAttribute("user", dbUser.executeGetter("one"));
 
         RequestDispatcher rd = request.getRequestDispatcher("./views/edit-user.jsp");
         rd.forward(request, response);
     }
 
     public void updateUserController(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        int id = Integer.parseInt(request.getParameter("id"));
-        String username = request.getParameter("username");
-        String firstName = request.getParameter("first_name");
-        String lastName = request.getParameter("last_name");
-        String avatar = request.getParameter("avatar_url");
+        DBUser dbUser = new DBUser(request);
 
-        User user = new User(id, username, firstName, lastName, avatar);
-        userDAO.updateUser(user);
+        dbUser.setParams("id", "username", "first_name", "last_name", "avatar_url");
+        dbUser.executeSetter("update");
 
         response.sendRedirect(request.getContextPath() + "/UserServlet?command=LIST");
     }
 
     public void deleteUserController(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        String id = request.getParameter("id");
+        DBUser dbUser = new DBUser(request);
 
-        userDAO.deleteUser(id);
+        dbUser.setParams("id");
+        dbUser.executeSetter("delete");
 
         response.sendRedirect(request.getContextPath() + "/UserServlet?command=LIST");
     }

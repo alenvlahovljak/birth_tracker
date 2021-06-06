@@ -1,8 +1,6 @@
 package com.bt.db;
 
-import com.bt.DAO.ManagerDAO;
 import com.bt.DAO.PartyDAO;
-import com.bt.bean.Manager;
 import com.bt.bean.Party;
 
 import javax.servlet.http.HttpServletRequest;

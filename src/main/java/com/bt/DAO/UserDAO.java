@@ -60,17 +60,14 @@ public class UserDAO {
     }
 
 
-    public User getUser(String userId) throws Exception {
+    public User getUser(int id) throws Exception {
         Connection connection = null;
         PreparedStatement statement = null;
         ResultSet resultSet = null;
 
         User user;
-        int id;
 
         try {
-            id = Integer.parseInt(userId);
-
             connection = jdbcConfig.establishDBConnection();
 
             String SQL = "select * from user where id=?";
@@ -163,15 +160,11 @@ public class UserDAO {
         }
     }
 
-    public void deleteUser(String userId) throws Exception {
+    public void deleteUser(int id) throws Exception {
         Connection connection = null;
         PreparedStatement statement = null;
 
-        int id;
-
         try {
-            id = Integer.parseInt(userId);
-
             connection = jdbcConfig.establishDBConnection();
 
             String SQL = "delete from user where id=?";
