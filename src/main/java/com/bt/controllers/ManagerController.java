@@ -12,7 +12,7 @@ public class ManagerController {
 
         request.setAttribute("managers", dbManager.executeGetter());
 
-        RequestDispatcher rd = request.getRequestDispatcher("./views/managers.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("./views/manager/managers.jsp");
         rd.forward(request, response);
     }
 
@@ -27,7 +27,7 @@ public class ManagerController {
     }
 
     public void addManagerController(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        RequestDispatcher rd = request.getRequestDispatcher("./views/add-manager.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("./views/manager/add-manager.jsp");
         rd.forward(request, response);
     }
 
@@ -46,7 +46,7 @@ public class ManagerController {
         dbManager.setParams("id");
         request.setAttribute("manager", dbManager.executeGetter("one"));
 
-        RequestDispatcher rd = request.getRequestDispatcher("./views/edit-manager.jsp");
+        RequestDispatcher rd = request.getRequestDispatcher("./views/manager/edit-manager.jsp");
         rd.forward(request, response);
     }
 

@@ -1,12 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<%--State--%>
-<c:set var="user" value="${requestScope.user}" scope="page"/>
-<%--state--%>
-
 <%--Links--%>
-<c:url var="userListRoute" value="UserServlet">
+<c:url var="managerListRoute" value="ManagerServlet">
     <c:param name="command" value="LIST"/>
 </c:url>
 <%--Links--%>
@@ -15,7 +11,7 @@
 <html lang="en">
 <head>
     <jsp:include page="../utils/config.jsp"/>
-    <title><c:out value="${user.username}"/> | Edit</title>
+    <title>Create new manager!</title>
 </head>
 <body>
 <jsp:include page="../UI/header.jsp"/>
@@ -23,18 +19,17 @@
     <section class="py-5 text-center container">
         <div class="row py-lg-5">
             <div class="col-lg-6 col-md-8 mx-auto">
-                <h1 class="fw-light"><c:out value="${user.username}"/></h1>
-                <p class="lead text-muted">Not happy with a user content?</p>
+                <h1 class="fw-light">Add new manager</h1>
+                <p class="lead text-muted">Add new team member.</p>
                 <p>
-                    <a href="${userListRoute}" class="btn btn-primary my-2">Get back to users!</a>
+                    <a href="${managerListRoute}" class="btn btn-primary my-2">Get back to managers</a>
                 </p>
             </div>
         </div>
     </section>
-    <form class="row" action="UserServlet?command=UPDATE" method="post">
+    <form class="row" action="ManagerServlet" method="post">
         <div class="col-3"></div>
         <div class="col-6">
-            <input type="hidden" name="id" value="${user.id}"/>
             <div class="form-group mb-3">
                 <label for="username">Username <small class="form-text text-muted">(required)</small></label>
                 <input type="text"
@@ -42,7 +37,6 @@
                        class="form-control mt-2"
                        id="username"
                        name="username"
-                       value="${user.username}"
                        placeholder="JonnY"
                 >
             </div>
@@ -53,7 +47,6 @@
                        class="form-control mt-2"
                        id="first_name"
                        name="first_name"
-                       value="${user.firstName}"
                        placeholder="John"
                 >
             </div>
@@ -64,7 +57,6 @@
                        class="form-control mt-2"
                        id="last_name"
                        name="last_name"
-                       value="${user.lastName}"
                        placeholder="Smith"
                 >
             </div>
@@ -74,7 +66,6 @@
                        class="form-control mt-2"
                        id="thumbnail"
                        name="avatar_url"
-                       value="${user.avatar}"
                        placeholder="https://www.example.com"
                 >
             </div>
@@ -82,7 +73,7 @@
         <div class="col-3"></div>
         <div class="col-3"></div>
         <div class="col-9">
-            <button type="submit" class="btn btn-primary mt-3">Save</button>
+            <button type="submit" class="btn btn-primary mt-3">Submit</button>
         </div>
     </form>
 
