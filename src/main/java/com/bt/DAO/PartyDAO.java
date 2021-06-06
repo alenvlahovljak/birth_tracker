@@ -90,7 +90,7 @@ public class PartyDAO {
             if (resultSet.next()) {
                 party = retrievePartyDBModel(resultSet);
             } else {
-                throw new Exception("Could not find party with id: " + id);
+                return null;
             }
 
             return party;

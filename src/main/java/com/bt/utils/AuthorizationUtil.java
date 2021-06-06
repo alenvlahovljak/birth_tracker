@@ -39,7 +39,6 @@ public class AuthorizationUtil {
                 if (admin.getRole().equals("1"))
                     return true;
             } catch (Exception e) {
-                e.printStackTrace();
                 return false;
             }
         }
@@ -50,7 +49,6 @@ public class AuthorizationUtil {
                 if (manager.getRole().equals("2"))
                     return true;
             } catch (Exception e) {
-                e.printStackTrace();
                 return false;
             }
         }
@@ -61,7 +59,6 @@ public class AuthorizationUtil {
                 if (user.getRole().equals("3"))
                     return true;
             } catch (Exception e) {
-                e.printStackTrace();
                 return false;
             }
         }

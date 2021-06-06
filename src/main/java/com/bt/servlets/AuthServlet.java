@@ -26,6 +26,7 @@ public class AuthServlet extends HttpServlet {
                     break;
                 case "user":
                     authController.userController(request,response);
+                    break;
                 default:
                     authController.destroyClientSessionController(request, response);
             }

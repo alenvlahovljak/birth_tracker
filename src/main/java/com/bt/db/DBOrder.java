@@ -37,7 +37,7 @@ public class DBOrder {
         OrderDAO orderDAO = new OrderDAO();
 
         if (quantity.equals("one")) {
-            if (column.equals("column")) {
+            if (column.equals("discount")) {
                 return orderDAO.getUserDiscount(this.userId);
             }
 

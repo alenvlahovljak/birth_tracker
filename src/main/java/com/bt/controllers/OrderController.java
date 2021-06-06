@@ -1,15 +1,28 @@
 package com.bt.controllers;
 
+import com.bt.bean.User;
 import com.bt.db.DBOrder;
 import com.bt.db.DBParty;
+import com.bt.utils.AuthorizationUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class OrderController {
+    AuthorizationUtil authorizationUtil;
+
+
     public void createOrderController(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        DBOrder dbOrder = new DBOrder(request);
+        authorizationUtil = new AuthorizationUtil(request, response);
+
         DBParty dbParty = new DBParty(request);
+
+        if (!authorizationUtil.hasRole(3)) {
+            response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LIST");
+            return;
+        }
+
+        DBOrder dbOrder = new DBOrder(request);
 
         dbOrder.setParams("id", "user_id", "party_id", "rating", "discount");
         dbOrder.executeSetter("create");
@@ -21,6 +34,13 @@ public class OrderController {
     }
 
     public void updateOrderRatingController(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        authorizationUtil = new AuthorizationUtil(request, response);
+
+        if (!authorizationUtil.hasRole(3)) {
+            response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LIST");
+            return;
+        }
+
         DBOrder dbOrder = new DBOrder(request);
 
         dbOrder.setParams("id", "user_id", "party_id", "rating", "discount");
@@ -30,6 +50,13 @@ public class OrderController {
     }
 
     public void updateOrderDiscountController(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        authorizationUtil = new AuthorizationUtil(request, response);
+
+        if (!authorizationUtil.hasRole(3)) {
+            response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LIST");
+            return;
+        }
+
         DBOrder dbOrder = new DBOrder(request);
 
         dbOrder.setParams("id", "user_id", "party_id", "rating", "discount");
@@ -39,6 +66,13 @@ public class OrderController {
     }
 
     public void deleteOrderController(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        authorizationUtil = new AuthorizationUtil(request, response);
+
+        if (!authorizationUtil.hasRole(3)) {
+            response.sendRedirect(request.getContextPath() + "/PartyServlet?command=LIST");
+            return;
+        }
+
         DBOrder dbOrder = new DBOrder(request);
         DBParty dbParty = new DBParty(request);
 
