@@ -28,18 +28,18 @@ public class Party {
     }
 
     public Party(int id, String name, String description, String thumbnail, int maxParticipants) {
-        this(name,description,thumbnail,maxParticipants);
+        this(name, description, thumbnail, maxParticipants);
         this.id = id;
     }
 
     public Party(String name, String description, String thumbnail, int maxParticipants, int organizationId) {
-        this(name,description,thumbnail,maxParticipants);
+        this(name, description, thumbnail, maxParticipants);
         this.organizationId = organizationId;
     }
 
 
     public Party(String name, String description, String thumbnail, int maxParticipants, boolean hasFreeSpots, int organizationId) {
-        this(name,description,thumbnail,maxParticipants);
+        this(name, description, thumbnail, maxParticipants);
         this.hasFreeSpots = hasFreeSpots;
         this.organizationId = organizationId;
     }
@@ -71,7 +71,7 @@ public class Party {
     }
 
     public Party(int id, String name, String description, String thumbnail, int participants, int maxParticipants, boolean hasFreeSpots, int organizationId, String organizationAbbreviation) {
-        this(id, name, description, thumbnail, participants, maxParticipants, hasFreeSpots,organizationId);
+        this(id, name, description, thumbnail, participants, maxParticipants, hasFreeSpots, organizationId);
         this.organizationAbbreviation = organizationAbbreviation;
     }
 
