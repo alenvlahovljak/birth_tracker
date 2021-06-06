@@ -3,7 +3,7 @@
 
 <%--State--%>
 <c:set var="client" value="${sessionScope.client}" scope="page"/>
-<%--state--%>
+<%--State--%>
 
 <%--Links--%>
 <c:url var="logInAdminRoute" value="AuthServlet">
