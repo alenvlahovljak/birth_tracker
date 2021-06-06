@@ -9,13 +9,6 @@ public class Organization {
     private float rating;
     private int managerId;
 
-    public Organization(String name, String abbreviation, String description, String thumbnail, int managerId) {
-        this.name = name;
-        this.abbreviation = abbreviation;
-        this.description = description;
-        this.thumbnail = thumbnail;
-        this.managerId = managerId;
-    }
 
     public Organization(String name, String abbreviation, String description, String thumbnail) {
         this.name = name;
@@ -24,22 +17,24 @@ public class Organization {
         this.thumbnail = thumbnail;
     }
 
-    public Organization(int id, String name, String abbreviation, String description, String thumbnail, int managerId) {
-        this(name, abbreviation, description, thumbnail, managerId);
+    public Organization(String name, String abbreviation, String description, String thumbnail, int managerId) {
+        this(name, abbreviation, description, thumbnail);
+        this.managerId = managerId;
+    }
+
+    public Organization(int id, String name, String abbreviation, String description, String thumbnail) {
+        this(name, abbreviation, description, thumbnail);
         this.id = id;
+    }
+
+    public Organization(int id, String name, String abbreviation, String description, String thumbnail, int managerId) {
+        this(id, name, abbreviation, description, thumbnail);
+        this.managerId = managerId;
     }
 
     public Organization(int id, String name, String abbreviation, String description, String thumbnail, float rating, int managerId) {
         this(id, name, abbreviation, description, thumbnail, managerId);
         this.rating = rating;
-    }
-
-    public Organization(int id, String name, String abbreviation, String description, String thumbnail) {
-        this.id = id;
-        this.name = name;
-        this.abbreviation = abbreviation;
-        this.description = description;
-        this.thumbnail = thumbnail;
     }
 
     public int getId() {
@@ -96,5 +91,18 @@ public class Organization {
 
     public void setManagerId(int managerId) {
         this.managerId = managerId;
+    }
+
+    @Override
+    public String toString() {
+        return "Organization{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", abbreviation='" + abbreviation + '\'' +
+                ", description='" + description + '\'' +
+                ", thumbnail='" + thumbnail + '\'' +
+                ", rating=" + rating +
+                ", managerId=" + managerId +
+                '}';
     }
 }
